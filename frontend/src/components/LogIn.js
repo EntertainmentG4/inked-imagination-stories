@@ -1,8 +1,5 @@
 import {  useLayoutEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import { AuthContext } from "../../contexts/AuthProvider";
-// import { authInitialState } from "../../contexts/initialStates/AuthInitialState";
-// import { getAuth } from "../../services/localstorage-service";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import Swal from "sweetalert2";
 
@@ -12,7 +9,6 @@ const testUser = {
 };
 
 const LogIn = () => {
-  // const { handleLoginFn, setUserState } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [loginState, setLoginState] = useState({
     email: "",

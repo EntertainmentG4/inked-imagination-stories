@@ -1,0 +1,388 @@
+{
+  "books": [
+    {
+      "title": "Thinking, Fast and Slow",
+      "author": "Daniel Kahneman",
+      "category": "Non-Fiction",
+      "imgUrl": "https://m.media-amazon.com/images/I/71m+kC4vOxL.jpg",
+      "pages": 499,
+      "rating": 4.8,
+      "reviews": [
+        {
+          "username": "CognitiveScienceEnthusiast",
+          "rating": 3,
+          "comment": "Kahneman's exploration of the two systems of thinking is mind-blowing. A must-read for anyone interested in decision-making and human behavior.",
+          "date": "2022-10-28"
+        },
+        {
+          "username": "PsychologyStudent",
+          "rating": 4.7,
+          "comment": "An insightful book that challenges the way we think and perceive the world. Kahneman's Nobel Prize-winning research is brilliantly explained.",
+          "date": "2022-10-20"
+        }
+      ],
+      "description": "In 'Thinking, Fast and Slow,' Daniel Kahneman, a renowned psychologist and Nobel laureate, explores the fascinating realm of human decision-making and presents his influential research on the two systems of thinking that drive our choices and judgments. Through vivid examples and thought-provoking anecdotes, Kahneman challenges conventional wisdom, shedding light on the workings of the mind and providing valuable insights into the complexities of human behavior. This captivating masterpiece invites readers to reconsider their understanding of decision-making and gain a deeper understanding of the intricacies of the human mind.",
+      "id": "1"
+    },
+    {
+      "title": "The Body Keeps the Score",
+      "author": "Bessel van der Kolk",
+      "category": "Non-Fiction",
+      "imgUrl": "https://m.media-amazon.com/images/I/71-OnTj8N8L.jpg",
+      "pages": 480,
+      "rating": 4.9,
+      "reviews": [
+        {
+          "username": "MindfulReader",
+          "rating": 5,
+          "comment": "A groundbreaking exploration of trauma and its impact on the body and mind.",
+          "date": "2022-11-25"
+        },
+        {
+          "username": "PsychologyEnthusiast",
+          "rating": 4.8,
+          "comment": "Van der Kolk's insights into trauma and healing are invaluable for both professionals and individuals.",
+          "date": "2022-11-15"
+        }
+      ],
+      "description": "In 'The Body Keeps the Score,' Bessel van der Kolk, a renowned psychiatrist and trauma expert, delves into the profound effects of trauma on the body and mind. Drawing on decades of clinical experience and scientific research, van der Kolk explores the complex interplay between trauma, memory, and the physical sensations that become lodged within us. Through real-life stories and compelling case studies, he sheds light on the long-term impact of trauma and offers insights into innovative therapeutic approaches that can aid in healing. 'The Body Keeps the Score' is an essential read for anyone seeking to understand the intricate connection between trauma and its lasting effects, providing valuable knowledge and hope for those on the path to recovery.",
+      "id": "2"
+    },
+    {
+      "title": "Sapiens: A Brief History of Humankind",
+      "author": "Yuval Noah Harari",
+      "category": "Non-Fiction",
+      "imgUrl": "https://m.media-amazon.com/images/I/51QyW2cE1CL._SY346_.jpg",
+      "pages": 443,
+      "rating": 4.6,
+      "reviews": [
+        {
+          "username": "HistoryBuff",
+          "rating": 4.5,
+          "comment": "An eye-opening book that explores the history of humankind from a unique perspective. Highly recommended!",
+          "date": "2022-12-05"
+        },
+        {
+          "username": "CuriousReader",
+          "rating": 4.7,
+          "comment": "Harari's ability to condense complex history into an engaging narrative is impressive. A must-read for anyone interested in our origins.",
+          "date": "2022-12-01"
+        }
+      ],
+      "description": "In 'Sapiens: A Brief History of Humankind,' Yuval Noah Harari provides a thought-provoking exploration of the history of our species. From the emergence of Homo sapiens in Africa to the present day, Harari examines the key revolutions and developments that have shaped human societies. With a captivating narrative and a broad perspective, he discusses the agricultural revolution, the scientific revolution, and the impact of technology on our species. This book offers unique insights into our past, challenges our present, and invites us to contemplate the future of humankind.",
+      "id": "3"
+    },
+    {
+      "title": "The Alchemist",
+      "author": "Paulo Coelho",
+      "category": "Fiction",
+      "imgUrl": "https://m.media-amazon.com/images/I/81R+lLdHTFL._SY346_.jpg",
+      "pages": 197,
+      "rating": 4.7,
+      "reviews": [
+        {
+          "username": "DreamSeeker",
+          "rating": 5,
+          "comment": "A beautiful and inspiring tale about following one's dreams. Coelho's writing is enchanting.",
+          "date": "2022-12-15"
+        },
+        {
+          "username": "Booklover123",
+          "rating": 4.5,
+          "comment": "I couldn't put this book down. It's a philosophical journey that leaves you with a sense of wonder.",
+          "date": "2022-12-10"
+        }
+      ],
+      "description": "Written by Paulo Coelho, 'The Alchemist' is a renowned novel that follows the journey of a young Andalusian shepherd named Santiago. In his quest to discover his personal legend, Santiago encounters various characters and experiences spiritual transformation. This enchanting tale weaves together themes of destiny, spirituality, and the pursuit of one's dreams. Through its profound and philosophical narrative, 'The Alchemist' inspires readers to listen to their hearts and pursue their passions. This timeless story continues to captivate readers worldwide.",
+      "id": "4"
+    },
+    {
+      "title": "To Kill a Mockingbird",
+      "author": "Harper Lee",
+      "category": "Fiction",
+      "imgUrl": "https://m.media-amazon.com/images/I/81CpLgqKxjL._SY346_.jpg",
+      "pages": 336,
+      "rating": 4.8,
+      "reviews": [
+        {
+          "username": "LiteraryLover",
+          "rating": 5,
+          "comment": "A timeless classic that explores themes of racial inequality and justice. Harper Lee's storytelling is extraordinary.",
+          "date": "2022-11-20"
+        },
+        {
+          "username": "Bookworm123",
+          "rating": 4.7,
+          "comment": "To Kill a Mockingbird is a must-read for its powerful portrayal of compassion and morality.",
+          "date": "2022-11-15"
+        }
+      ],
+      "description": "Harper Lee's 'To Kill a Mockingbird' is a Pulitzer Prize-winning novel set in the 1930s. The story is narrated by Scout Finch, a young girl in a racially divided Alabama town. As Scout's lawyer father defends an innocent black man accused of rape, the book explores themes of racial injustice, moral courage, and the loss of innocence. With its memorable characters and poignant storytelling, 'To Kill a Mockingbird' remains a thought-provoking and influential work of literature.",
+      "id": "5"
+    },
+    {
+      "title": "1984",
+      "author": "George Orwell",
+      "category": "Fiction",
+      "imgUrl": "https://m.media-amazon.com/images/I/71mIs35+lEL._SY346_.jpg",
+      "pages": 328,
+      "rating": 4.7,
+      "reviews": [
+        {
+          "username": "DystopianReader",
+          "rating": 4.5,
+          "comment": "A chilling and thought-provoking dystopian novel that serves as a warning about totalitarianism.",
+          "date": "2022-12-05"
+        },
+        {
+          "username": "LiteratureFanatic",
+          "rating": 4.8,
+          "comment": "Orwell's portrayal of a surveillance state and the suppression of individuality is hauntingly relevant.",
+          "date": "2022-12-02"
+        }
+      ],
+      "description": "George Orwell's '1984' is a dystopian novel set in a totalitarian society. The story follows Winston Smith, a low-ranking member of the ruling Party, as he rebels against the oppressive regime. '1984' explores themes of government surveillance, propaganda, and the manipulation of truth. Orwell's prophetic vision and powerful writing continue to resonate, making '1984' a classic and a cautionary tale about the dangers of authoritarianism.",
+      "id": "6"
+    },
+    {
+      "title": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald",
+      "category": "Fiction",
+      "imgUrl": "https://m.media-amazon.com/images/I/81j5tyWw8DL._SY346_.jpg",
+      "pages": 200,
+      "rating": 4.3,
+      "reviews": [
+        {
+          "username": "ClassicLiteratureFan",
+          "rating": 4.2,
+          "comment": "Fitzgerald's portrayal of the Jazz Age and the pursuit of the American Dream is both captivating and tragic.",
+          "date": "2022-11-25"
+        },
+        {
+          "username": "Booklover456",
+          "rating": 4.5,
+          "comment": "The Great Gatsby is a beautifully written novel that offers a glimpse into the excesses and disillusionment of the 1920s.",
+          "date": "2022-11-20"
+        }
+      ],
+      "description": "Set in the 1920s, F. Scott Fitzgerald's 'The Great Gatsby' explores themes of wealth, love, and the elusive American Dream. The story follows Jay Gatsby, a mysterious millionaire, as he becomes entangled in a web of obsession and tragedy. Through vivid prose and vibrant characters, Fitzgerald delves into the complexities of the human heart and exposes the emptiness and moral decay lurking beneath the glamorous façade of the Roaring Twenties.",
+      "id": "7"
+    },
+    {
+      "title": "The Catcher in the Rye",
+      "author": "J.D. Salinger",
+      "category": "Fiction",
+      "imgUrl": "https://m.media-amazon.com/images/I/81FyZ+7vE7L._SY346_.jpg",
+      "pages": 224,
+      "rating": 4.1,
+      "reviews": [
+        {
+          "username": "LiteraryExplorer",
+          "rating": 4.3,
+          "comment": "Salinger's iconic coming-of-age novel offers a raw and honest portrayal of teenage angst and disillusionment.",
+          "date": "2022-12-08"
+        },
+        {
+          "username": "Bookworm789",
+          "rating": 4.2,
+          "comment": "Holden Caulfield's voice is unforgettable, and the themes of alienation and authenticity resonate deeply.",
+          "date": "2022-12-05"
+        }
+      ],
+      "description": "'The Catcher in the Rye' by J.D. Salinger is a classic novel narrated by Holden Caulfield, a disenchanted teenager. The book follows Holden's journey through New York City as he grapples with the loss of innocence, societal hypocrisy, and his own identity. Salinger's masterful portrayal of teenage rebellion and search for meaning continues to captivate readers, making 'The Catcher in the Rye' a timeless exploration of youth and the human condition.",
+      "id": "8"
+    },
+    {
+      "title": "The Lord of the Rings",
+      "author": "J.R.R. Tolkien",
+      "category": "Fiction",
+      "imgUrl": "https://m.media-amazon.com/images/I/51Yx8Cf9YnL._SY346_.jpg",
+      "pages": 1178,
+      "rating": 4.9,
+      "reviews": [
+        {
+          "username": "FantasyLover",
+          "rating": 5,
+          "comment": "Tolkien's epic fantasy masterpiece with a richly detailed world and captivating characters. A must-read for any fantasy enthusiast.",
+          "date": "2022-12-18"
+        },
+        {
+          "username": "Bookworm456",
+          "rating": 4.8,
+          "comment": "The Lord of the Rings is a timeless tale of courage, friendship, and the battle between good and evil.",
+          "date": "2022-12-15"
+        }
+      ],
+      "description": "J.R.R. Tolkien's 'The Lord of the Rings' is an epic high fantasy trilogy that takes readers on a thrilling journey through Middle-earth. The story follows Frodo Baggins, a hobbit tasked with destroying a powerful ring that could bring darkness and destruction to the world. With its intricate mythology, memorable characters, and themes of heroism and sacrifice, 'The Lord of the Rings' has become a beloved classic of the fantasy genre, inspiring generations of readers and serving as a benchmark for epic storytelling.",
+      "id": "9"
+    },
+    {
+      "title": "Pride and Prejudice",
+      "author": "Jane Austen",
+      "category": "Fiction",
+      "imgUrl": "https://m.media-amazon.com/images/I/51E7N+FoaHL._SY346_.jpg",
+      "pages": 432,
+      "rating": 4.7,
+      "reviews": [
+        {
+          "username": "ClassicLiteratureFan",
+          "rating": 4.6,
+          "comment": "A delightful and witty novel that explores themes of love, societal expectations, and the complexities of human relationships.",
+          "date": "2022-12-10"
+        },
+        {
+          "username": "Bookworm789",
+          "rating": 4.8,
+          "comment": "Jane Austen's sharp social commentary and memorable characters make Pride and Prejudice a timeless masterpiece.",
+          "date": "2022-12-05"
+        }
+      ],
+      "description": "Jane Austen's 'Pride and Prejudice' is a beloved classic of English literature. Set in the 19th century, the novel follows the lively and independent Elizabeth Bennet as she navigates the intricacies of love, marriage, and societal expectations. With its engaging dialogue, memorable characters, and Austen's keen observations on social norms, 'Pride and Prejudice' continues to enchant readers, exploring themes of class, prejudice, and the pursuit of true love.",
+      "id": "10"
+    },
+    {
+      "title": "The Da Vinci Code",
+      "author": "Dan Brown",
+      "category": "Fiction",
+      "imgUrl": "https://m.media-amazon.com/images/I/81SKvqiUgVL._SY346_.jpg",
+      "pages": 592,
+      "rating": 4.2,
+      "reviews": [
+        {
+          "username": "ThrillerEnthusiast",
+          "rating": 4.3,
+          "comment": "A fast-paced and intriguing thriller that keeps you guessing until the very end. Dan Brown's storytelling is gripping.",
+          "date": "2022-12-08"
+        },
+        {
+          "username": "MysteryFan",
+          "rating": 4.1,
+          "comment": "The Da Vinci Code is a thrilling mix of art, history, and conspiracy. A captivating page-turner.",
+          "date": "2022-12-05"
+        }
+      ],
+      "description": "Dan Brown's 'The Da Vinci Code' is a gripping thriller that combines art, history, and cryptic puzzles. The story follows symbologist Robert Langdon as he unravels a series of clues and religious mysteries while trying to solve a murder and uncover a secret that could shake the foundations of Christianity. With its intricate plot, fascinating historical references, and breakneck pace, 'The Da Vinci Code' became a global phenomenon, captivating readers with its blend of adventure, suspense, and thought-provoking ideas.",
+      "id": "11"
+    },
+    {
+      "title": "The Chronicles of Narnia",
+      "author": "C.S. Lewis",
+      "category": "Fantasy",
+      "imgUrl": "https://m.media-amazon.com/images/I/81eqoEjxjJL._SY346_.jpg",
+      "pages": 766,
+      "rating": 4.6,
+      "reviews": [
+        {
+          "username": "FantasyReader123",
+          "rating": 4.7,
+          "comment": "C.S. Lewis' imaginative and enchanting series transports readers to a magical world full of adventure and timeless lessons.",
+          "date": "2022-12-15"
+        },
+        {
+          "username": "Bookworm456",
+          "rating": 4.5,
+          "comment": "The Chronicles of Narnia is a beloved fantasy series that sparks the imagination and imparts valuable moral lessons.",
+          "date": "2022-12-12"
+        }
+      ],
+      "description": "C.S. Lewis' 'The Chronicles of Narnia' is a classic fantasy series that invites readers into a magical world inhabited by talking animals, mythical creatures, and epic adventures. Spanning multiple books, the series follows various protagonists as they journey through Narnia, encountering both peril and wonder. Through its rich storytelling and allegorical themes, 'The Chronicles of Narnia' explores concepts of good versus evil, courage, faith, and the power of imagination, leaving a lasting impression on readers of all ages.",
+      "id": "12"
+    },
+    {
+      "title": "To Kill a Mockingbird",
+      "author": "Harper Lee",
+      "category": "Fiction",
+      "imgUrl": "https://m.media-amazon.com/images/I/81XR6WuKxFL._SY346_.jpg",
+      "pages": 336,
+      "rating": 4.8,
+      "reviews": [
+        {
+          "username": "ClassicLiteratureFan",
+          "rating": 4.9,
+          "comment": "Harper Lee's masterpiece addresses themes of racism, injustice, and the loss of innocence with profound impact.",
+          "date": "2022-12-20"
+        },
+        {
+          "username": "Booklover567",
+          "rating": 4.7,
+          "comment": "To Kill a Mockingbird is a powerful novel that touches the depths of human compassion and the flaws in society.",
+          "date": "2022-12-18"
+        }
+      ],
+      "description": "Harper Lee's 'To Kill a Mockingbird' is a timeless American classic set in the racially charged atmosphere of the Deep South during the 1930s. The story is narrated by Scout Finch, a young girl who learns about empathy, morality, and the destructive effects of prejudice through her father's defense of a wrongly accused Black man. With its poignant storytelling and memorable characters, 'To Kill a Mockingbird' explores themes of social inequality, compassion, and the power of standing up for what is right.",
+      "id": "13"
+    },
+    {
+      "title": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald",
+      "category": "Fiction",
+      "imgUrl": "https://m.media-amazon.com/images/I/81GeeGKNWfL._SY346_.jpg",
+      "pages": 180,
+      "rating": 4.2,
+      "reviews": [
+        {
+          "username": "LiteraryEnthusiast",
+          "rating": 4.3,
+          "comment": "F. Scott Fitzgerald's iconic novel captures the spirit of the Jazz Age and the disillusionment of the American Dream.",
+          "date": "2022-12-15"
+        },
+        {
+          "username": "Bookworm789",
+          "rating": 4.1,
+          "comment": "The Great Gatsby explores themes of wealth, love, and the emptiness that can lie beneath the glitz and glamour.",
+          "date": "2022-12-12"
+        }
+      ],
+      "description": "F. Scott Fitzgerald's 'The Great Gatsby' is a classic novel that paints a vivid portrait of 1920s America. Set in the glamorous world of Long Island's wealthy elite, the story follows Jay Gatsby, a mysterious millionaire, as he pursues his elusive dream and reconnects with his past love, Daisy Buchanan. Through its lyrical prose and evocative symbolism, 'The Great Gatsby' delves into themes of wealth, love, social class, and the disillusionment of the American Dream, leaving a lasting impact on readers.",
+      "id": "14"
+    },
+    {
+      "title": "1984",
+      "author": "George Orwell",
+      "category": "Fiction",
+      "imgUrl": "https://m.media-amazon.com/images/I/81qy6xuS3HL._SY346_.jpg",
+      "pages": 328,
+      "rating": 4.7,
+      "reviews": [
+        {
+          "username": "DystopianFanatic",
+          "rating": 4.8,
+          "comment": "George Orwell's dystopian masterpiece is a chilling warning about totalitarianism and the erosion of individual freedoms.",
+          "date": "2022-12-30"
+        },
+        {
+          "username": "ThoughtProvoker",
+          "rating": 4.6,
+          "comment": "1984 is a thought-provoking novel that remains relevant today, exploring themes of surveillance, propaganda, and power.",
+          "date": "2022-12-27"
+        }
+      ],
+      "description": "George Orwell's '1984' is a dystopian novel set in a totalitarian society where the government controls every aspect of its citizens' lives. The story follows Winston Smith, a low-ranking member of the ruling Party, as he rebels against the oppressive regime and seeks truth and freedom. '1984' explores themes of surveillance, propaganda, censorship, and the dangers of unchecked power, serving as a stark warning against the erosion of individual rights and the manipulation of truth.",
+      "id": "15"
+    },
+    {
+      "title": "The Catcher in the Rye",
+      "author": "J.D. Salinger",
+      "category": "Fiction",
+      "imgUrl": "https://m.media-amazon.com/images/I/81N+m2AfFfL._SY346_.jpg",
+      "pages": 277,
+      "rating": 4.5,
+      "reviews": [
+        {
+          "username": "ComingOfAgeReader",
+          "rating": 4.6,
+          "comment": "J.D. Salinger's coming-of-age novel brilliantly captures the angst and alienation of adolescence.",
+          "date": "2022-12-28"
+        },
+        {
+          "username": "LiteraryCritique",
+          "rating": 4.4,
+          "comment": "The Catcher in the Rye is a timeless classic that resonates with readers, exploring themes of identity and societal expectations.",
+          "date": "2022-12-25"
+        }
+      ],
+      "description": "J.D. Salinger's 'The Catcher in the Rye' is a seminal novel that follows Holden Caulfield, a disenchanted teenager navigating the complexities of adulthood and society. Through Holden's introspective and often rebellious narrative, the book explores themes of alienation, identity, phoniness, and the loss of innocence. 'The Catcher in the Rye' continues to captivate readers with its authentic portrayal of adolescent angst and its enduring commentary on the human condition.",
+      "id": "16"
+    }
+  ]
+}
