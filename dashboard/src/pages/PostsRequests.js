@@ -62,7 +62,7 @@ const PostsRequests = () => {
   return (
     <div>
       {posts.length === 0 ? (
-        <p style={{ marginTop: "200px" }}>No posts requests available</p>
+        <p style={{ marginTop: "200px",textAlign:"center" }}>No posts requests available</p>
       ) : (
         posts.map((post) => (
           <div

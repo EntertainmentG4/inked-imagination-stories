@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Users from './Users';
 import logo from "../images/book.png";
 import PostsRequests from "./PostsRequests";
-
+import Messages from "./Messages";
 export default function Sidebar() {
     const [selectedComponent, setSelectedComponent] = useState('labs');
 
@@ -13,6 +13,9 @@ export default function Sidebar() {
         }
          else if (selectedComponent === 'PostsRequests') {
             return <PostsRequests />;
+        }
+        else if (selectedComponent === 'Messages') {
+            return <Messages />;
         }
         return null;
     };
@@ -66,7 +69,7 @@ export default function Sidebar() {
                             </li>
                             <li
                                 className="pl-6 cursor-pointer text-white-600 text-md leading-3 tracking-normal mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none"
-                                onClick={() => handleComponentClick('approvedLabs')}
+                                onClick={() => handleComponentClick('Messages')}
                             >
                                 <div className="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-compass" width={20} height={20} viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
@@ -74,7 +77,7 @@ export default function Sidebar() {
                                         <polyline points="8 16 10 10 16 8 14 14 8 16" />
                                         <circle cx={12} cy={12} r={9} />
                                     </svg>
-                                    <span className="ml-2">Approved Labs</span>
+                                    <span className="ml-2">Messages</span>
                                 </div>
                             </li>
                             <li
