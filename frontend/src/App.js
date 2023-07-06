@@ -31,4 +31,6 @@ function App() {
   );
 }
 
+// json-server --watch db.json --port 9000
+
 export default App;

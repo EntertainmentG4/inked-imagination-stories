@@ -35,7 +35,7 @@ function Nav() {
                 <div className="flex justify-end w-3/4">
                   <div className="hidden lg:block">
                     <NavLink
-                      to="products"
+                      to="books"
                       className="flex items-center p-2 -m-2 text-gray-100 rounded-md hover:bg-gray-700 group"
                     >
                       Explore
@@ -62,11 +62,7 @@ function Nav() {
                       <span className="sr-only">favorite items view</span>
                     </NavLink>
                   </div>
-                  <span
-                    className="w-px h-6 ml-4 bg-gray-700 lg:ml-6"
-                    aria-hidden="true"
-                  />
-                  <div className="flow-root ml-4 lg:ml-6">
+                  {/* <div className="flow-root ml-4 lg:ml-6">
                     <NavLink
                       to="cart"
                       className="flex items-center p-2 -m-2 group"
@@ -75,12 +71,10 @@ function Nav() {
                         className="flex-shrink-0 w-6 h-6 text-gray-100 group-hover:text-gray-50"
                         aria-hidden="true"
                       />
-                      <span className="ml-1 text-xs font-medium text-gray-100 sm:ml-2 sm:text-sm group-hover:text-gray-50">
-                        {/* {cart.length} */}
-                      </span>
+                      <span className="ml-1 text-xs font-medium text-gray-100 sm:ml-2 sm:text-sm group-hover:text-gray-50"></span>
                       <span className="sr-only">items in cart, view bag</span>
                     </NavLink>
-                  </div>
+                  </div> */}
                   <span
                     className="w-px h-6 ml-4 bg-gray-700 lg:ml-6"
                     aria-hidden="true"

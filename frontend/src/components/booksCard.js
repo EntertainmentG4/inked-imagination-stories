@@ -6,7 +6,7 @@ function BooksCard() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/books")
+      .get("http://localhost:9000/books")
       .then((response) => {
         setData(response.data);
       })

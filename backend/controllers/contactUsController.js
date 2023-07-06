@@ -1,24 +1,5 @@
-const pool = require('../model/db');
+const pool = require("../model/db");
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-module.exports = {
-   
-  };
-  
+module.exports = {};
