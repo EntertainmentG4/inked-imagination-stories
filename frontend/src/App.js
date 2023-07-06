@@ -7,7 +7,7 @@ import ContactUs from "./components/ContactUs";
 import Home from "./components/index";
 import LogIn from "./components/LogIn";
 import SignUp from "./components/SignUp";
-
+import Blog from "./components/Blog";
 
 function App() {
   return (
@@ -20,6 +20,8 @@ function App() {
           <Route path="/ContactUs" element={<ContactUs />} />
           <Route path="/LogIn" element={<LogIn />} />
           <Route path="/SignUp" element={<SignUp />} />
+          <Route path="/Blog" element={<Blog />} />
+
         </Routes>
         <Footer /> 
       </BrowserRouter>
