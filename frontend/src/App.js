@@ -8,7 +8,7 @@ import Home from "./components/index";
 import LogIn from "./components/LogIn";
 import SignUp from "./components/SignUp";
 import Blog from "./components/Blog";
-
+import Sidebar from "./admin/Sidebar";
 
 function App() {
   return (
@@ -22,6 +22,7 @@ function App() {
           <Route path="/LogIn" element={<LogIn />} />
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/Blog" element={<Blog />} />
+          <Route path="/Sidebar" element={<Sidebar />} />
 
         </Routes>
         <Footer /> 

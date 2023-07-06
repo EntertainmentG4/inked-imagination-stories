@@ -3,7 +3,8 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
-function ContactUs() {
+function ContactUs() 
+{
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -12,7 +13,6 @@ function ContactUs() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // To passed as the data to be sent.
     const contactMessage = {
       name,
       email,
@@ -27,17 +27,17 @@ function ContactUs() {
       );
 
       if (response.status === 200) {
-        Swal.fire("Success", "تم إرسال الرسالة بنجاح!", "success");
+        Swal.fire("Success", "Message sent successfully!", "success");
 
         setName("");
         setEmail("");
         setPhone("");
         setMessage("");
       } else {
-        Swal.fire("Error", "فشل إرسال الرسالة.", "error");
+        Swal.fire("Error", "Failed to send message.", "error");
       }
     } catch (error) {
-      Swal.fire("Error", "حدث خطأ أثناء إرسال النموذج.", "error");
+      Swal.fire("Error", "An error occurred during form submission.", "error");
     }
   };
 
@@ -53,13 +53,13 @@ function ContactUs() {
       >
         <div className="flex items-center justify-center h-full bg-black bg-opacity-50">
           <div className="text-center">
-            <h1 className="text-4xl font-bold text-white mb-4">اتصل بنا</h1>
+            <h1 className="text-4xl font-bold text-white mb-4">Contact Us</h1>
 
             <nav className="text-white mb-8">
               <ol className="list-none p-0 inline-flex">
                 <li className="flex items-center">
                   <Link to="/" className="text-amber-500">
-                    الصفحة الرئيسية
+                    Home
                   </Link>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -76,28 +76,29 @@ function ContactUs() {
                     />
                   </svg>
                 </li>
-                <li>اتصل بنا</li>
+                <li>Contact Us</li>
               </ol>
             </nav>
           </div>
         </div>
       </div>
 
-      <div className="">
-        <section className="relative z-10 overflow-hidden bg-white py-20 lg:py-[120px]">
+      <div
+        className=""
+       
+      >
+        <section className="relative z-10 overflow-hidden bg-white py-20 lg:py-[120px]"
+        >
           <div className="container mx-auto">
             <div className="mx-4 flex flex-wrap lg:justify-between">
-              <div className="w-full lg:w-1/2 xl:w-6/12">
-                <div
-                  className="mb-12 max-w-[570px] lg:mb-0"
-                  style={{ marginRight: "30px", marginLeft: "30" }}
-                >
+              <div className="w-full  lg:w-1/2 xl:w-6/12">
+                <div className="mb-12 max-w-[570px] lg:mb-0" style={{ marginRight: "60px", marginLeft: "65px" }}>
                   <h2 className="text-dark mb-6 text-[32px] font-bold uppercase sm:text-[40px] lg:text-[36px] xl:text-[40px]">
-                    تواصل معنا
+                    GET IN TOUCH WITH US
                   </h2>
                   <h4 className="text-body-color mb-9 text-base leading-relaxed">
-                    إذا كان لديك أي أسئلة أو تشعر بالحيرة بشأن شيء ما ، فلا
-                    تتردد وتواصل معنا الآن... نحن هنا من أجلك
+                    If you have any questions or feel confused about something,
+                    do not hesitate and contact us now...we are here for you
                   </h4>
                   <div className="mb-8 flex w-full max-w-[370px]">
                     <div className="bg-primary text-primary mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded bg-opacity-5 sm:h-[70px] sm:max-w-[70px]">
@@ -112,10 +113,10 @@ function ContactUs() {
                     </div>
                     <div className="w-full">
                       <h4 className="text-dark mb-1 text-xl font-bold">
-                        موقعنا
+                        Our Location
                       </h4>
                       <p className="text-body-color text-base">
-                        الأردن - الزرقاء
+                        99 S.t - Zarqa City , Jordan
                       </p>
                     </div>
                   </div>
@@ -134,10 +135,10 @@ function ContactUs() {
                     </div>
                     <div className="w-full">
                       <h4 className="text-dark mb-1 text-xl font-bold">
-                        رقم الهاتف
+                        Phone Number
                       </h4>
                       <p className="text-body-color text-base">
-                        780577727 (962+)
+                        (+962)780577727
                       </p>
                     </div>
                   </div>
@@ -154,7 +155,7 @@ function ContactUs() {
                     </div>
                     <div className="w-full">
                       <h4 className="text-dark mb-1 text-xl font-bold">
-                        البريد الإلكتروني
+                        Email Address
                       </h4>
                       <p className="text-body-color text-base">
                         info@inkedImaginationStories.com
@@ -163,50 +164,43 @@ function ContactUs() {
                   </div>
                 </div>
               </div>
-              <div
-                className="w-full px-4 lg:w-1/2 xl:w-5/12"
-                style={{ marginLeft: "20px", marginRight: "40px" }}
-              >
+              <div className="w-full px-4 lg:w-1/2 xl:w-5/12">
                 <div className="relative rounded-lg bg-white p-8 shadow-lg sm:p-12">
                   <form method="post" onSubmit={handleSubmit}>
                     <div className="mb-6">
                       <input
                         type="text"
-                        placeholder="اسمك"
+                        placeholder="Your Name"
                         className="text-body-color border-[f0f0f0] focus:border-primary w-full rounded border py-3 px-[14px] text-base outline-none focus-visible:shadow-none shadow-md transition duration-300"
                         value={name}
-                        onChange={(event) => setName(event.target.value)}
-                        required
+                        onChange={(event) => setName(event.target.value)} required
                       />
                     </div>
                     <div className="mb-6">
                       <input
                         type="email"
-                        placeholder="بريدك الإلكتروني"
+                        placeholder="Your Email"
                         className="text-body-color border-[f0f0f0] focus:border-primary w-full rounded border py-3 px-[14px] text-base outline-none focus-visible:shadow-none shadow-md transition duration-300"
                         value={email}
-                        onChange={(event) => setEmail(event.target.value)}
-                        required
+                        onChange={(event) => setEmail(event.target.value)} required
                       />
                     </div>
                     <div className="mb-6">
                       <input
                         type="text"
-                        placeholder="رقم هاتفك"
+                        placeholder="Your Phone"
                         className="text-body-color border-[f0f0f0] focus:border-primary w-full rounded border py-3 px-[14px] text-base outline-none focus-visible:shadow-none shadow-md transition duration-300"
                         value={phone}
-                        onChange={(event) => setPhone(event.target.value)}
-                        required
+                        onChange={(event) => setPhone(event.target.value)} required
                       />
                     </div>
                     <div className="mb-6">
                       <textarea
                         rows={6}
-                        placeholder="رسالتك"
+                        placeholder="Your Message"
                         className="text-body-color border-[f0f0f0] focus:border-primary w-full resize-none rounded border py-3 px-[14px] text-base outline-none focus-visible:shadow-none shadow-md transition duration-300"
                         value={message}
-                        onChange={(event) => setMessage(event.target.value)}
-                        required
+                        onChange={(event) => setMessage(event.target.value)} required
                       />
                     </div>
                     <div>
@@ -214,7 +208,7 @@ function ContactUs() {
                         type="submit"
                         className="bg-amber-500 border-primary w-full rounded border p-3 text-white transition hover:bg-opacity-90"
                       >
-                        إرسال الرسالة
+                        Send Message
                       </button>
                     </div>
                   </form>

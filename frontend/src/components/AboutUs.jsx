@@ -89,12 +89,12 @@ function AboutUs() {
               </span>
 
               <h1 className="text-xl font-semibold text-gray-700 capitalize dark:text-white">
-                جمع المتبرعين بالمستفيدين
+              The ability to write posts
               </h1>
 
               <p className="text-gray-500 dark:text-gray-300">
-                نعمل على جمعهم من خلال هذه المنصة بطريقة سريعة مما يجعل عملية
-                التبرع أكثر سهولة{" "}
+              Writing posts on different topics and interacting with users through comments
+             {" "}
               </p>
             </div>
 
@@ -117,13 +117,12 @@ function AboutUs() {
               </span>
 
               <h1 className="text-xl font-semibold text-gray-700 capitalize dark:text-white">
-                سهولة التبرع و معرفة حاجاتهم
+              Add to favourites
               </h1>
 
               <p className="text-gray-500 dark:text-gray-300">
-                من خلالنا يمكنك معرفة جميع حاجات المنتفعين من التبرع و مساعدتهم
-                و التواصل معهم و تقديم اللازم لهم ، بالإضافة للتبرع من خلال
-                المنصة بالمال{" "}
+              Add stories and movies to your favorites to see them later
+                 {" "}
               </p>
             </div>
 
@@ -147,13 +146,12 @@ function AboutUs() {
 
               <h1 className="text-xl font-semibold text-gray-700 capitalize dark:text-white">
                 {" "}
-                تصميم سهل و مناسب للمستخدم
+                Giving recommended stories and books
               </h1>
 
               <p className="text-gray-500 dark:text-gray-300">
-                يعّد تصميم المنصة سهل التعامل لجميع المستخدمين ، فلقد عملنا على
-                توفير خدماتنا بطريقة مبسطة ، فيمكنك معرفة كيف يعمل حتى لو لم
-                تستخدمه من قبل .{" "}
+              Giving recommended stories and books to users according to their age and their favorite category of books and stories.
+                   {" "}
               </p>
             </div>
           </div>
