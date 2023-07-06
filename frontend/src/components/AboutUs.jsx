@@ -9,8 +9,7 @@ import essam from "../images/essam.png";
 import bushra from "../images/bushra.png";
 
 
-function AboutUs() 
-{
+function AboutUs() {
   return (
     <>
       {/* Hero section in about us */}
@@ -24,14 +23,13 @@ function AboutUs()
       >
         <div className="flex items-center justify-center h-full bg-black bg-opacity-50">
           <div className="text-center">
-            <h1 className="text-4xl font-bold text-white mb-4">حولنا</h1>
+            <h1 className="text-4xl font-bold text-white mb-4">About us</h1>
 
             <nav className="text-white mb-8">
               <ol className="list-none p-0 inline-flex">
                 <li className="flex items-center">
                   <Link to="/" className="text-amber-500">
-                    الصفحة الرئيسية
-                  </Link>
+                    Home                  </Link>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-4 w-4 mx-2"
@@ -47,7 +45,7 @@ function AboutUs()
                     />
                   </svg>
                 </li>
-                <li>حولنا</li>
+                <li>About</li>
               </ol>
             </nav>
           </div>
@@ -61,7 +59,8 @@ function AboutUs()
       <section className="bg-white dark:bg-gray-900">
         <div className="container px-6 py-10 mx-auto">
           <h1 className="text-2xl font-semibold text-gray-800 capitalize text-center lg:text-3xl dark:text-white">
-            استكشف مميزاتنا الرائعة{" "}
+          Explore our great features
+{" "}
           </h1>
 
           <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 md:grid-cols-2 xl:grid-cols-3">
@@ -175,14 +174,14 @@ function AboutUs()
                 <div className="w-full px-3 sm:px-4 xl:w-1/2">
                   <div className="py-3 sm:py-4">
                     <img
-                      src="https://1.bp.blogspot.com/-ckQLJFwphbU/Wr4oXB10nGI/AAAAAAAADLE/SKquI9YvrugIOT0Fq07IdGdprUnO1pQcwCLcBGAs/s1600/%25D8%25A7%25D9%2584%25D8%25B5%25D8%25AF%25D9%2582%25D8%25A9%2B%25D8%25A7%25D9%2584%25D8%25AC%25D8%25A7%25D8%25B1%25D9%258A%25D8%25A9.png"
+                      src="https://cdn.planetspark.in/editor_assets/pictures/3690/content.jpg"
                       alt="an image"
                       className="w-full rounded-2xl"
                     />
                   </div>
                   <div className="py-3 sm:py-4">
                     <img
-                      src="https://www.aliqtisadalislami.net/wp-content/uploads/2017/12/shutterstock_610533473.jpg"
+                      src="https://cdn.shopify.com/s/files/1/2371/5999/files/homepage-illustration_900x.png?v=1613674555"
                       alt=""
                       className="w-full rounded-2xl"
                     />
@@ -191,7 +190,7 @@ function AboutUs()
                 <div className="w-full px-3 sm:px-4 xl:w-1/2 ">
                   <div className="relative z-10 my-4">
                     <img
-                      src="https://cdn.tailgrids.com/2.0/image/marketing/images/about/about-01/image-3.jpg"
+                      src="https://miro.medium.com/v2/resize:fit:1400/1*4vgcYfe1MgRPX98OFq5hcg.jpeg"
                       alt=""
                       className="w-full rounded-2xl"
                     />
@@ -771,22 +770,25 @@ function AboutUs()
             </div>
             <div className="w-full px-4 lg:w-1/2 xl:w-5/12 texy-black capitalize ">
               <div className="mt-10 lg:mt-0">
-                <span className=" mb-2 block text-lg font-semibold">
-                  لماذا تختارنا
+                <span className="text-left mb-2 block text-lg font-semibold">
+                Why choose us
                 </span>
-                <h3 className="text-black mb-8 text-3lg font-bold sm:text-4xl">
-                  {/* {aboutUsData.about_title} */}
-                </h3>
-                
-                <p className="text-body-color mb-8 text-base">
-                  {/* {aboutUsData.about_us} */}
-                </p>
+                <h4 className="text-black text-left mb-8 text-3lg font-bold sm:text-4xl">
+                Inked imagination stories
+                </h4>
 
-                <p>
-                  فقمنا بتوفير القدرة على معرفة حاجات المستفيدين حسب العديد من
-                  الفئات و مكنّا المتبرعين من رؤية مدى التغيير الذي يحدثه تبرعهم
-                  و إمكانية تبرعهم بالمال من خلال المنصة ، و قدرتهم على التواصل
-                  مع المستفيدين و معرفة ما يحتاجونه تماماً.
+                <p className="text-body-color mb-8 text-left">
+                a captivating platform that caters to readers of all ages. We take pride in offering a diverse range of categories, ensuring there's something for everyone. Whether you're a young child seeking enchanting fairy tales, a teenager engrossed in thrilling adventures, or an adult indulging in thought-provoking narratives, we have it all.
+
+Our website features an interactive community where readers can actively engage with each other. By allowing users to add posts and comments, we foster a vibrant environment that encourages discussions, recommendations, and the sharing of personal insights. Your voice matters here, and we strive to create a space where readers can connect and exchange their thoughts on their favorite stories.                </p>
+
+                <p className="text-left">
+                Join our stories website today and embark on a journey through captivating worlds, diverse characters, and imaginative plots. Immerse yourself in the magic of storytelling, connect with fellow readers, and curate your personal collection of cherished tales. Here, stories come alive, and the possibilities are endless.
+
+
+
+
+
                 </p>
 
               </div>
@@ -803,11 +805,9 @@ function AboutUs()
         <div className="xl:container mx-auto px-6 md:px-12">
           <div className="mb-28">
             <h2 className="mb-4 text-center text-2xl font-bold text-black md:text-4xl">
-              فريقنا
-            </h2>
+              Our team            </h2>
             <p className="text-center text-black lg:mx-auto lg:w-8/12">
-              يتكون فريقنا المذهل من أفراد متحمسين يكرسون جهودهم لإحداث ثورة في
-              إنشاء هذا الموقع الترفيهي
+            Our amazing team consists of passionate individuals who are dedicated to revolutionizing the creation of this entertainment website
             </p>
           </div>
           <div className="grid gap-24 md:grid-cols-3 md:gap-12">
