@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const UserRouter = require("./routers/Users");
 const AdminRouter = require("./routers/admin");
+const ContactRouter = require("./routers/contactUs");
 const app = express();
 const port = 5000;
 app.use(cors());

@@ -28,8 +28,7 @@ const PostsRequests = () => {
       if (result.isConfirmed) {
         axios
           .put(`http://localhost:5000/posts/${postId}`)
-          .then((response) => {
-          })
+          .then((response) => {})
           .catch((error) => {
             console.log(error);
           });
@@ -50,8 +49,7 @@ const PostsRequests = () => {
         const reason = result.value;
         axios
           .put(`http://localhost:5000/posts/${postId}`, { reason })
-          .then((response) => {
-          })
+          .then((response) => {})
           .catch((error) => {
             console.log(error);
           });
@@ -62,7 +60,9 @@ const PostsRequests = () => {
   return (
     <div>
       {posts.length === 0 ? (
-        <p style={{ marginTop: "200px",textAlign:"center" }}>No posts requests available</p>
+        <p style={{ marginTop: "200px", textAlign: "center" }}>
+          No posts requests available
+        </p>
       ) : (
         posts.map((post) => (
           <div
@@ -78,7 +78,9 @@ const PostsRequests = () => {
               />
               <span className="text-gray-800 font-bold">{post.username}</span>
             </div>
-            <h2 className="text-xl font-bold text-gray-800 mb-2">{post.title}</h2>
+            <h2 className="text-xl font-bold text-gray-800 mb-2">
+              {post.title}
+            </h2>
             <p className="text-gray-600 mb-4">{post.content}</p>
             <div className="flex justify-center">
               <button
