@@ -1,5 +1,4 @@
 import React from "react";
-import { useContext, useEffect, useState } from "react";
 import { Transition } from "@headlessui/react";
 import BooksCard from "../components/booksCard";
 
@@ -39,8 +38,12 @@ function Books() {
           </p>
         </div>
       )} */}
-      <section aria-labelledby="products-heading" className="pt-6 mt-16 pb-24">
-        <div className="grid grid-cols-2 gap-2 lg:grid-cols-4 bg-transparent">
+      <section
+        aria-labelledby="products-heading"
+        className="pt-6 mt-16 pb-24"
+        style={{ backgroundColor: "#111827" }}
+      >
+        <div className="grid grid-cols-2 gap-2 lg:grid-cols-4 bg-transparent p-10">
           {" "}
           <BooksCard />
         </div>

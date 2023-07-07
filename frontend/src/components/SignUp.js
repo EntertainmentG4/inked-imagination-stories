@@ -77,70 +77,73 @@ const SignUp = () => {
     setSignupState({ ...signupState, [e.target.name]: e.target.value });
   };
   return (
-    <section className="mt-5">
-      <div className="flex flex-col items-center  px-9 py-8 mx-auto mt-32 sm:mt-0 md:h-screen lg:py-0 text-left">
-        <div className="w-full bg-gray-800 border border-gray-700 rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+    <div className="relative py-24 mt-16 overflow-hidden bg-gray-900 lg:mt-0 isolate sm:pt-32 sm:pb-16">
+      <img
+        src="https://w0.peakpx.com/wallpaper/4/328/HD-wallpaper-beautiful-bookworm-short-hair-pretty-reading-girl-books-library-anime.jpg"
+        alt="header-books"
+        className="absolute inset-0 object-cover object-right w-full h-50 -z-10 md:object-center"
+      />
+
+      <div className="flex flex-col items-center px-4 sm:px-6 lg:px-8 mx-auto sm:mt-32 md:mt-0 md:h-screen lg:py-0 text-left">
+        <div className="w-full max-w-md bg-gray-800 border border-gray-700 rounded-lg shadow md:mt-0 xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-100 md:text-2xl text-center mb-5">
               Create an Account
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
-              <div className="sm:flex sm:space-x-4">
-                <div>
-                  <label
-                    htmlFor="firstName"
-                    className="block mb-2 text-sm font-medium text-gray-100"
-                  >
-                    First Name
-                  </label>
-                  <input
-                    onChange={changeHandlerFn}
-                    value={signupState.firstName}
-                    type="text"
-                    name="firstName"
-                    id="firstName"
-                    className="border sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-gray-100 focus:ring-cyan-800 focus:border-cyan-800"
-                    placeholder="Jon"
-                    required={true}
-                  />
-                </div>
-                <div className="mt-2 sm:mt-0">
-                  <label
-                    htmlFor="lastName"
-                    className="block mb-2 text-sm font-medium text-gray-100"
-                  >
-                    Last Name
-                  </label>
-                  <input
-                    onChange={changeHandlerFn}
-                    value={signupState.lastName}
-                    type="text"
-                    name="lastName"
-                    id="lastName"
-                    className="border sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-gray-100 focus:ring-cyan-800 focus:border-cyan-800"
-                    placeholder="watts"
-                    required={true}
-                  />
-                </div>
+              <div>
+                <label
+                  htmlFor="firstName"
+                  className="block mb-2 text-sm font-medium text-gray-100"
+                >
+                  First Name
+                </label>
+                <input
+                  onChange={changeHandlerFn}
+                  value={signupState.firstName}
+                  type="text"
+                  name="firstName"
+                  id="firstName"
+                  className="border sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-gray-100 focus:ring-cyan-800 focus:border-cyan-800"
+                  placeholder="Jon"
+                  required={true}
+                />
               </div>
-              <div className="mt-2 sm:mt-0">
-                  <label
-                    htmlFor="lastName"
-                    className="block mb-2 text-sm font-medium text-gray-100"
-                  >
-                    Birth Date
-                  </label>
-                  <input
-                    onChange={changeHandlerFn}
-                    value={signupState.lastName}
-                    type="date"
-                    name="birthdate"
-                    id="birthdate"
-                    className="border sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-gray-100 focus:ring-cyan-800 focus:border-cyan-800"
-                    placeholder="watts"
-                    required={true}
-                  />
-                </div>
+              <div>
+                <label
+                  htmlFor="lastName"
+                  className="block mb-2 text-sm font-medium text-gray-100"
+                >
+                  Last Name
+                </label>
+                <input
+                  onChange={changeHandlerFn}
+                  value={signupState.lastName}
+                  type="text"
+                  name="lastName"
+                  id="lastName"
+                  className="border sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-gray-100 focus:ring-cyan-800 focus:border-cyan-800"
+                  placeholder="Watts"
+                  required={true}
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="birthdate"
+                  className="block mb-2 text-sm font-medium text-gray-100"
+                >
+                  Birth Date
+                </label>
+                <input
+                  onChange={changeHandlerFn}
+                  value={signupState.birthdate}
+                  type="date"
+                  name="birthdate"
+                  id="birthdate"
+                  className="border sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-gray-100 focus:ring-cyan-800 focus:border-cyan-800"
+                  required={true}
+                />
+              </div>
               <div>
                 <label
                   htmlFor="email"
@@ -159,7 +162,7 @@ const SignUp = () => {
                   required={true}
                 />
               </div>
-              <div className="relative">
+              <div>
                 <label
                   htmlFor="password"
                   className="block mb-2 text-sm font-medium text-gray-100"
@@ -193,7 +196,7 @@ const SignUp = () => {
                   required={true}
                 />
               </div>
-              <div className="relative">
+              <div>
                 <label
                   htmlFor="confirmPassword"
                   className="block mb-2 text-sm font-medium text-gray-100"
@@ -240,6 +243,7 @@ const SignUp = () => {
               >
                 Create Account
               </button>
+
               <p className="text-sm font-light text-gray-400">
                 Already have an account?
                 <Link
@@ -253,7 +257,7 @@ const SignUp = () => {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

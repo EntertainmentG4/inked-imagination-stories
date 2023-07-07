@@ -1,6 +1,7 @@
 const db = require("../model/db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const router = require("../routers/admin");
 
 function tokenGenerator({ user_id, role, username, email }) {
   const payload = { user_id, role, username, email };
@@ -64,4 +65,85 @@ const checkAdmin = async (req, res) => {
   }
 };
 
-module.exports = { handleCreateNewAdmin, checkAdmin };
+// Soft delete the user from the database
+const deleteUserFromWebSite = (req, res) => {
+  const { user_id } = req.params;
+  const { deleted } = req.body;
+
+  // Update the 'deleted' column for the specified user_id
+  const query = "UPDATE users SET deleted = $1 WHERE user_id = $2";
+
+  db.query(query, [deleted, user_id], (error, result) => {
+    if (error) {
+      console.log(error);
+      res.status(500).json({ message: "Internal server error" });
+    } else {
+      res.status(200).json({ message: "User soft deleted successfully" });
+    }
+  });
+};
+
+// To get all the users
+const getAllUsersData = (req, res) => {
+  db.query("SELECT * FROM users", (error, result) => {
+    if (error) {
+      console.error("Error fetching users:", error);
+      res.status(500).json({ error: "Internal server error" });
+    } else {
+      res.status(200).json(result.rows);
+    }
+  });
+};
+
+// Get all posts with status 'pending'
+const getAllPostsWherePending = async (req, res) => {
+  try {
+    const query = "SELECT * FROM posts WHERE post_status = $1";
+    const values = ["pending"];
+    const result = await db.query(query, values);
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Error retrieving pending posts:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+// Accept a post
+const updatePostStatusAccept = async (req, res) => {
+  const { post_id } = req.params;
+  try {
+    const query = "UPDATE posts SET post_status = $1 WHERE post_id = $2";
+    const values = ["accepted", post_id];
+    await db.query(query, values);
+    res.sendStatus(200);
+  } catch (error) {
+    console.error("Error accepting the post:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+// Reject a post
+const updatePostStatusReject = async (req, res) => {
+  const { post_id } = req.params;
+  const { reason } = req.body;
+  try {
+    const query =
+      "UPDATE posts SET post_status = $1, rejection_reason = $2 WHERE post_id = $3";
+    const values = ["rejected", reason, post_id];
+    await pool.query(query, values);
+    res.sendStatus(200);
+  } catch (error) {
+    console.error("Error rejecting the post:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+module.exports = {
+  handleCreateNewAdmin,
+  checkAdmin,
+  deleteUserFromWebSite,
+  getAllUsersData,
+  getAllPostsWherePending,
+  updatePostStatusAccept,
+  updatePostStatusReject,
+};

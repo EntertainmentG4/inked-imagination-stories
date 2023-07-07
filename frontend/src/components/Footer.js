@@ -1,8 +1,10 @@
+import { HashLink } from "react-router-hash-link";
+
 const Footer = () => {
   return (
     <>
       <footer
-        className="text-white px-4 py-5 md:px-8"
+        className="text-white px-4 py-5 md:px-8 border-t border-gray-700"
         style={{ backgroundColor: "#111827" }}
       >
         <div className="max-w-lg sm:mx-auto sm:text-center">
@@ -20,13 +22,21 @@ const Footer = () => {
         </div>
 
         <ul className="items-center justify-center mt-8 space-y-5 sm:flex sm:space-x-4 sm:space-y-0">
-          <li className="text-white-700 hover:text-white-900">Home</li>
+          <HashLink smooth to="/#">
+            <li className="text-white-700 hover:text-white-900">Home</li>
+          </HashLink>
 
           <li className="text-white-700 hover:text-white-900">Blog</li>
 
-          <li className="text-white-700 hover:text-white-900">Who are we</li>
+          <HashLink to="/AboutUs/#">
+            <li className="text-white-700 hover:text-white-900">Who are we</li>
+          </HashLink>
 
-          <li className="text-white-700 hover:text-white-900">get in touch</li>
+          <HashLink smooth to="/ContactUs/#">
+            <li className="text-white-700 hover:text-white-900">
+              get in touch
+            </li>
+          </HashLink>
         </ul>
 
         <div className="mt-8 items-center justify-center sm:flex">

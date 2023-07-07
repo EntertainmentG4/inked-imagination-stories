@@ -87,9 +87,15 @@ const LogIn = () => {
   return (
     <>
       <section>
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto mt-32 overflow-hidden md:mt-0 md:h-screen lg:py-0 text-left">
+        <div className="flex flex-col mt-5 items-center justify-center px-6 py-8 mx-auto mt-32 overflow-hidden md:mt-0 md:h-screen lg:py-0 text-left">
           <div className="w-full bg-gray-800 border border-gray-700 rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+            <img
+    src="https://wallpapersworld.org/wp-content/uploads/2023/02/%D8%AE%D9%84%D9%81%D9%8A%D8%A7%D8%AA-%D8%A7%D9%86%D9%85%D9%8A-%D8%A8%D9%86%D8%A7%D8%AA-%D9%83%D9%8A%D9%88%D8%AA-2-768x480.jpg"
+    alt="header-books"
+    className="absolute inset-0 object-cover object-right w-full h-50 -z-10 md:object-center"
+  />
+
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-100 md:text-2xl">
                 Sign in to your account
               </h1>

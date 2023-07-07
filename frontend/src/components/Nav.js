@@ -1,10 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import {
-  ShoppingBagIcon,
-  HeartIcon,
-  UserCircleIcon,
-} from "@heroicons/react/24/outline";
+import { HeartIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { MdOutlineExplore } from "react-icons/md";
 import SearchBar from "./search";
 

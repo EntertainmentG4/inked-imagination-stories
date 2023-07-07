@@ -9,6 +9,9 @@ import LogIn from "./components/LogIn";
 import SignUp from "./components/SignUp";
 import Blog from "./pages/blog";
 import Books from "./pages/books";
+import Postdetails from "./components/postdetails";
+import Addcomments from "./components/addcomments";
+import Wishlist from "./pages/wishList";
 
 function App() {
   return (
@@ -24,6 +27,9 @@ function App() {
           <Route path="/Blog" element={<Blog />} />
           <Route path="/books" element={<Books />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/Postdetails" element={<Postdetails />} />
+          <Route path="/Addcomments" element={<Addcomments />} />
+          <Route path="/Wishlist" element={<Wishlist />} />
         </Routes>
         <Footer />
       </BrowserRouter>

@@ -8,7 +8,6 @@ import issa from "../images/issa.jpg";
 import essam from "../images/essam.png";
 import bushra from "../images/bushra.png";
 
-
 function AboutUs() {
   return (
     <>
@@ -29,7 +28,8 @@ function AboutUs() {
               <ol className="list-none p-0 inline-flex">
                 <li className="flex items-center">
                   <Link to="/" className="text-amber-500">
-                    Home                  </Link>
+                    Home{" "}
+                  </Link>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-4 w-4 mx-2"
@@ -53,14 +53,11 @@ function AboutUs() {
       </div>
       {/* End hero section */}
 
-
-
       {/* features section */}
       <section className="bg-white dark:bg-gray-900">
         <div className="container px-6 py-10 mx-auto">
           <h1 className="text-2xl font-semibold text-gray-800 capitalize text-center lg:text-3xl dark:text-white">
-          Explore our great features
-{" "}
+            Explore our great features{" "}
           </h1>
 
           <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 md:grid-cols-2 xl:grid-cols-3">
@@ -89,12 +86,12 @@ function AboutUs() {
               </span>
 
               <h1 className="text-xl font-semibold text-gray-700 capitalize dark:text-white">
-              The ability to write posts
+                The ability to write posts
               </h1>
 
               <p className="text-gray-500 dark:text-gray-300">
-              Writing posts on different topics and interacting with users through comments
-             {" "}
+                Writing posts on different topics and interacting with users
+                through comments{" "}
               </p>
             </div>
 
@@ -117,12 +114,11 @@ function AboutUs() {
               </span>
 
               <h1 className="text-xl font-semibold text-gray-700 capitalize dark:text-white">
-              Add to favourites
+                Add to favourites
               </h1>
 
               <p className="text-gray-500 dark:text-gray-300">
-              Add stories and movies to your favorites to see them later
-                 {" "}
+                Add stories and movies to your favorites to see them later{" "}
               </p>
             </div>
 
@@ -150,8 +146,8 @@ function AboutUs() {
               </h1>
 
               <p className="text-gray-500 dark:text-gray-300">
-              Giving recommended stories and books to users according to their age and their favorite category of books and stories.
-                   {" "}
+                Giving recommended stories and books to users according to their
+                age and their favorite category of books and stories.{" "}
               </p>
             </div>
           </div>
@@ -161,7 +157,7 @@ function AboutUs() {
       {/* End features */}
 
       {/* ====== About Section Start */}
-      <section className="bg-white text-black overflow-hidden pt-20 pb-12 lg:pt-[120px] lg:pb-[90px]">
+      <section className="bg-white dark:bg-gray-900 text-white overflow-hidden pt-20 pb-12 lg:pt-[120px] lg:pb-[90px]">
         <div className="container mx-auto">
           <div className="-mx-7 flex flex-wrap items-center">
             <div className="w-full px-4 lg:w-6/12">
@@ -769,26 +765,36 @@ function AboutUs() {
             <div className="w-full px-4 lg:w-1/2 xl:w-5/12 texy-black capitalize ">
               <div className="mt-10 lg:mt-0">
                 <span className="text-left mb-2 block text-lg font-semibold">
-                Why choose us
+                  Why choose us
                 </span>
-                <h4 className="text-black text-left mb-8 text-3lg font-bold sm:text-4xl">
-                Inked imagination stories
+                <h4 className="text-white text-left mb-8 text-3lg font-bold sm:text-4xl">
+                  Inked imagination stories
                 </h4>
 
                 <p className="text-body-color mb-8 text-left">
-                a captivating platform that caters to readers of all ages. We take pride in offering a diverse range of categories, ensuring there's something for everyone. Whether you're a young child seeking enchanting fairy tales, a teenager engrossed in thrilling adventures, or an adult indulging in thought-provoking narratives, we have it all.
-
-Our website features an interactive community where readers can actively engage with each other. By allowing users to add posts and comments, we foster a vibrant environment that encourages discussions, recommendations, and the sharing of personal insights. Your voice matters here, and we strive to create a space where readers can connect and exchange their thoughts on their favorite stories.                </p>
-
-                <p className="text-left">
-                Join our stories website today and embark on a journey through captivating worlds, diverse characters, and imaginative plots. Immerse yourself in the magic of storytelling, connect with fellow readers, and curate your personal collection of cherished tales. Here, stories come alive, and the possibilities are endless.
-
-
-
-
-
+                  a captivating platform that caters to readers of all ages. We
+                  take pride in offering a diverse range of categories, ensuring
+                  there's something for everyone. Whether you're a young child
+                  seeking enchanting fairy tales, a teenager engrossed in
+                  thrilling adventures, or an adult indulging in
+                  thought-provoking narratives, we have it all. Our website
+                  features an interactive community where readers can actively
+                  engage with each other. By allowing users to add posts and
+                  comments, we foster a vibrant environment that encourages
+                  discussions, recommendations, and the sharing of personal
+                  insights. Your voice matters here, and we strive to create a
+                  space where readers can connect and exchange their thoughts on
+                  their favorite stories.{" "}
                 </p>
 
+                <p className="text-left">
+                  Join our stories website today and embark on a journey through
+                  captivating worlds, diverse characters, and imaginative plots.
+                  Immerse yourself in the magic of storytelling, connect with
+                  fellow readers, and curate your personal collection of
+                  cherished tales. Here, stories come alive, and the
+                  possibilities are endless.
+                </p>
               </div>
             </div>
           </div>
@@ -796,16 +802,17 @@ Our website features an interactive community where readers can actively engage 
       </section>
       {/* ====== About Section End */}
 
-
-
       {/* Start Team members section */}
-      <div className="bg-white py-20 shadow">
+      <div className="bg-white dark:bg-gray-900 text-white py-20 shadow">
         <div className="xl:container mx-auto px-6 md:px-12">
           <div className="mb-28">
-            <h2 className="mb-4 text-center text-2xl font-bold text-black md:text-4xl">
-              Our team            </h2>
-            <p className="text-center text-black lg:mx-auto lg:w-8/12">
-            Our amazing team consists of passionate individuals who are dedicated to revolutionizing the creation of this entertainment website
+            <h2 className="mb-4 text-center text-2xl font-bold text-white md:text-4xl">
+              Our team{" "}
+            </h2>
+            <p className="text-center text-white lg:mx-auto lg:w-8/12">
+              Our amazing team consists of passionate individuals who are
+              dedicated to revolutionizing the creation of this entertainment
+              website
             </p>
           </div>
           <div className="grid gap-24 md:grid-cols-3 md:gap-12">
@@ -821,7 +828,7 @@ Our website features an interactive community where readers can actively engage 
                 />
               </div>
               <div className="pt-4">
-                <h4 className="text-2xl text-amber-700 dark:text-black">
+                <h4 className="text-2xl text-amber-700 dark:text-white">
                   Saad Al-Zireeni{" "}
                 </h4>
                 <span className="block text-sm text-gray-500">
@@ -874,7 +881,7 @@ Our website features an interactive community where readers can actively engage 
                 />
               </div>
               <div className="pt-4">
-                <h4 className="text-2xl text-amber-700 dark:text-black">
+                <h4 className="text-2xl text-amber-700 dark:text-white">
                   {" "}
                   Razan Aboushi
                 </h4>
@@ -928,7 +935,7 @@ Our website features an interactive community where readers can actively engage 
                 />
               </div>
               <div className="pt-4">
-                <h4 className="text-2xl  text-amber-700 dark:text-black">
+                <h4 className="text-2xl  text-amber-700 dark:text-white">
                   Fahmi Aldairi{" "}
                 </h4>
                 <span className="block text-sm text-gray-500">
@@ -987,10 +994,10 @@ Our website features an interactive community where readers can actively engage 
                 />
               </div>
               <div className="pt-4">
-                <h4 className="text-2xl text-amber-700 dark:text-black">
+                <h4 className="text-2xl text-amber-700 dark:text-white">
                   Essam addi{" "}
                 </h4>
-                <span className="block text-sm text-gray-500">عضو بالفريق</span>
+                <span className="block text-sm text-gray-500">Team member</span>
               </div>
               <div className="flex justify-center space-x-4 text-gray-500">
                 <Link to="#" target="_blank" aria-label="facebook">
@@ -1038,10 +1045,10 @@ Our website features an interactive community where readers can actively engage 
                 />
               </div>
               <div className="pt-4">
-                <h4 className="text-2xl text-amber-700 dark:text-black">
+                <h4 className="text-2xl text-amber-700 dark:text-white">
                   Issa Zeidan
                 </h4>
-                <span className="block text-sm text-gray-500">عضو بالفريق</span>
+                <span className="block text-sm text-gray-500">Team member</span>
               </div>
               <div className="flex justify-center space-x-4 text-gray-500">
                 <Link to="#" target="_blank" aria-label="facebook">
@@ -1089,10 +1096,10 @@ Our website features an interactive community where readers can actively engage 
                 />
               </div>
               <div className="pt-4">
-                <h4 className="text-2xl  text-amber-700 dark:text-black">
+                <h4 className="text-2xl  text-amber-700 dark:text-white">
                   Bushra Abu Rahma{" "}
                 </h4>
-                <span className="block text-sm text-gray-500">عضو بالفريق</span>
+                <span className="block text-sm text-gray-500">Team member</span>
               </div>
               <div className="flex justify-center space-x-4 text-gray-500">
                 <Link to="#" target="_blank" aria-label="facebook">

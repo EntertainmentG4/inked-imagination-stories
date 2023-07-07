@@ -1,265 +1,267 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
-function Blog() {
+const Blog = () => {
+  const [blogPosts, setBlogPosts] = useState([]);
+  const [formData, setFormData] = useState({
+    title: "",
+    content: "",
+    author: "",
+    tags: "",
+    date: new Date().toISOString().split("T")[0],
+  });
+  const [showForm, setShowForm] = useState(false);
+
+  const fetchBlogPosts = () => {
+    // Simulated blog posts
+    const posts = [
+      {
+        _id: 1,
+        title: "Blog Post 1",
+        content: "This is the content of Blog Post 1.",
+        author: "John Doe",
+        tags: "Technology",
+        date: "2023-07-01",
+      },
+      {
+        _id: 2,
+        title: "Blog Post 2",
+        content: "This is the content of Blog Post 2.",
+        author: "Jane Smith",
+        tags: "Travel",
+        date: "2023-07-02",
+      },
+      // Add more simulated blog posts as needed
+    ];
+
+    setBlogPosts(posts);
+  };
+
+  const handleInputChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleCreatePost = () => {
+    const newPost = {
+      _id: blogPosts.length + 1,
+      ...formData,
+    };
+
+    newPost.date = new Date(newPost.date).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+
+    setBlogPosts([...blogPosts, newPost]);
+    setShowForm(false);
+  };
+
+  const handleCancel = () => {
+    setShowForm(false);
+  };
+
+  // Call the fetchBlogPosts function when the component mounts
+  React.useEffect(() => {
+    fetchBlogPosts();
+  }, []);
+
   return (
     <>
-      {/* <div className="2xl:mx-auto 2xl:container xl:px-20 lg:px-10 px-6 py-20 mt-24">
-        <div className="lg:flex justify-center">
-          <div className="2xl:w-7/12 lg:w-8/12 md:w-10/12">
-            <img
-              src="https://i.ibb.co/ZY43FRd/blog-1-desktop.png"
-              alt="fingerprint recognition"
-              className="lg:w-full w-auto"
-            />
-            <div className="mt-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <p className="text-base leading-4 text-gray-500">5 feb</p>
-                  <p className="text-base leading-none text-gray-500 ml-12">
-                    5 min read
-                  </p>
-                </div>
-                <div className="flex items-center">
+      <div
+        className="bg-cover bg-center h-screen"
+        style={{
+          backgroundImage: `url(https://www.scottleroymarketing.com/wp-content/uploads/2016/06/coffee.jpg)`,
+          height: "500px",
+        }}
+      >
+        <div className="flex items-center justify-center h-full bg-black bg-opacity-10">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold text-black mb-4">Blog</h1>
+
+            <nav className="text-white mb-8">
+              <ol className="list-none p-0 inline-flex">
+                <li className="flex items-center">
+                  <Link to="/" className="text-amber-500">
+                    Home
+                  </Link>
                   <svg
-                    width={64}
-                    height={2}
-                    viewBox="0 0 64 2"
-                    fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 mx-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
                   >
-                    <path d="M64 1H0" stroke="#6B7280" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
                   </svg>
-                  <p className="text-base leading-none text-gray-500 ml-2">
-                    Jeff Bill
-                  </p>
-                </div>
-              </div>
-              <h1 className="lg:text-3xl text-2xl font-semibold mt-4 text-gray-800">
-                Chip fingerprint technology for secure transaction
-              </h1>
-              <p className="text-base leading-6 text-gray-600 mt-2">
-                The emerge of internet of Things has brought in, rather
-                urgently, a need for low-cost security technology. While
-                passwords and other such forms of encription are software base,
-                there is also a need for security level
-              </p>
-            </div>
-          </div>
-          <div className="lg:ml-6 lg:mt-0 mt-7 2xl:w-3/12 lg:w-4/12 w-full flex lg:flex-col sm:flex-row flex-col items-center justify-between">
-            <div className="lg:w-auto sm:w-1/2">
-              <img
-                src="https://i.ibb.co/d6jQJyY/blog-2-desktop.png"
-                alt="flying letters"
-                className="w-full"
-              />
-              <div className="mt-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <p className="text-base leading-4 text-gray-500">5 feb</p>
-                    <p className="text-base leading-none text-gray-500 ml-12">
-                      5 min read
-                    </p>
-                  </div>
-                  <div className="flex items-center">
-                    <svg
-                      width={64}
-                      height={2}
-                      viewBox="0 0 64 2"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M64 1H0" stroke="#6B7280" />
-                    </svg>
-                    <p className="text-base leading-none text-gray-500 ml-2">
-                      Jeff Bill
-                    </p>
-                  </div>
-                </div>
-                <h1 className="text-2xl font-semibold leading-6 mt-4 text-gray-800">
-                  Internet of things
-                </h1>
-                <p className="text-base leading-6 text-gray-600 mt-2">
-                  The emerge of internet of Things has brought in a need for
-                  low-cost security technology.
-                </p>
-              </div>
-            </div>
-            <div className="lg:mt-6 sm:mt-0 mt-6 lg:ml-0 sm:ml-6 lg:w-auto sm:w-1/2">
-              <img
-                src="https://i.ibb.co/9cN11LT/blog-3-desktop.png"
-                alt="robotic arm"
-                className="w-full"
-              />
-              <div className="mt-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <p className="text-base leading-4 text-gray-500">5 feb</p>
-                    <p className="text-base leading-none text-gray-500 ml-12">
-                      5 min read
-                    </p>
-                  </div>
-                  <div className="flex items-center">
-                    <svg
-                      width={64}
-                      height={2}
-                      viewBox="0 0 64 2"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M64 1H0" stroke="#6B7280" />
-                    </svg>
-                    <p className="text-base leading-none text-gray-500 ml-2">
-                      Jeff Bill
-                    </p>
-                  </div>
-                </div>
-                <h1 className="text-2xl font-semibold leading-6 mt-4 text-gray-800">
-                  Internet of things
-                </h1>
-                <p className="text-base leading-6 text-gray-600 mt-2">
-                  The emerge of internet of Things has brought in a need for
-                  low-cost security technology.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
-      <div className="py-12">
-        <div className="container m-auto px-6 text-gray-600 md:px-12 xl:px-6">
-          <div className="mb-12 space-y-2 text-center">
-            <h2 className="text-3xl font-bold text-gray-800 md:text-4xl dark:text-white">
-              Sharing is Caring
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300 lg:mx-auto lg:w-6/12">
-              Quam hic dolore cumque voluptate rerum beatae et quae, tempore
-              sunt, debitis dolorum officia aliquid explicabo? Excepturi,
-              voluptate?
-            </p>
-          </div>
-          <div className="lg:w-3/4 xl:w-2/4 lg:mx-auto">
-            <div className="group relative -mx-4 sm:-mx-8 p-6 sm:p-8 rounded-3xl bg-white dark:bg-transparent border border-transparent hover:border-gray-100 dark:shadow-none dark:hover:border-gray-700 dark:hover:bg-gray-800 shadow-2xl shadow-transparent hover:shadow-gray-600/10 sm:gap-8 sm:flex transition duration-300 hover:z-10">
-              <div className="sm:w-2/6 rounded-3xl overflow-hidden transition-all duration-500 group-hover:rounded-xl">
-                <img
-                  src="https://images.unsplash.com/photo-1661749711934-492cd19a25c3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80"
-                  alt="art cover"
-                  loading="lazy"
-                  width={1000}
-                  height={667}
-                  className="h-56 sm:h-full w-full object-cover object-top transition duration-500 group-hover:scale-105"
-                />
-              </div>
-              <div className="sm:p-2 sm:pl-0 sm:w-4/6">
-                <span className="mt-4 mb-2 inline-block font-medium text-gray-400 dark:text-gray-500 sm:mt-0">
-                  Jul 27 2022
-                </span>
-                <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">
-                  Provident de illo eveniet commodi fuga fugiat laboriosam
-                  expedita.
-                </h3>
-                <p className="my-6 text-gray-600 dark:text-gray-300">
-                  Laudantium in, voluptates ex placeat quo harum aliquam totam,
-                  doloribus eum impedit atque...
-                </p>
-                <div className="flex gap-4">
-                  <a
-                    href="#"
-                    className="px-3 py-1 rounded-full border border-gray-100 text-sm font-medium text-primary transition duration-300 hover:border-transparent hover:bg-primary hover:text-white dark:border-gray-700 dark:text-gray-300"
-                  >
-                    Tailwindcss
-                  </a>
-                  <a
-                    href="#"
-                    className="px-3 py-1 rounded-full border border-gray-100 text-sm font-medium text-primary transition duration-300 hover:border-transparent hover:bg-primary hover:text-white dark:border-gray-700 dark:text-gray-300"
-                  >
-                    VueJS
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="group relative hover:z-10 -mx-4 sm:-mx-8 p-6 sm:p-8 rounded-3xl bg-white dark:bg-transparent border border-transparent hover:border-gray-100 dark:shadow-none dark:hover:border-gray-700 dark:hover:bg-gray-800 shadow-2xl shadow-transparent hover:shadow-gray-600/10 sm:gap-8 sm:flex transition duration-300">
-              <div className="sm:w-2/6 rounded-3xl overflow-hidden transition-all duration-500 group-hover:rounded-xl">
-                <img
-                  src="https://images.unsplash.com/photo-1491895200222-0fc4a4c35e18?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80"
-                  alt="art cover"
-                  loading="lazy"
-                  width={1000}
-                  height={667}
-                  className="h-56 sm:h-full w-full object-cover object-top transition duration-500 group-hover:scale-105"
-                />
-              </div>
-              <div className="sm:p-2 sm:pl-0 sm:w-4/6">
-                <span className="mt-4 mb-2 inline-block font-medium text-gray-400 dark:text-gray-500 sm:mt-0">
-                  Jul 27 2022
-                </span>
-                <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">
-                  Provident de illo eveniet commodi fuga fugiat laboriosam
-                  expedita.
-                </h3>
-                <p className="my-6 text-gray-600 dark:text-gray-300">
-                  Laudantium in, voluptates ex placeat quo harum aliquam totam,
-                  doloribus eum impedit atque...
-                </p>
-                <div className="flex gap-4">
-                  <a
-                    href="#"
-                    className="px-3 py-1 rounded-full border border-gray-100 text-sm font-medium text-primary transition duration-300 hover:border-transparent hover:bg-primary hover:text-white dark:border-gray-700 dark:text-gray-300"
-                  >
-                    Tailwindcss
-                  </a>
-                  <a
-                    href="#"
-                    className="px-3 py-1 rounded-full border border-gray-100 text-sm font-medium text-primary transition duration-300 hover:border-transparent hover:bg-primary hover:text-white dark:border-gray-700 dark:text-gray-300"
-                  >
-                    VueJS
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="group relative hover:z-10 -mx-4 sm:-mx-8 p-6 sm:p-8 rounded-3xl bg-white dark:bg-transparent border border-transparent hover:border-gray-100 dark:shadow-none dark:hover:border-gray-700 dark:hover:bg-gray-800 shadow-2xl shadow-transparent hover:shadow-gray-600/10 sm:gap-8 sm:flex transition duration-300">
-              <div className="sm:w-2/6 rounded-3xl overflow-hidden transition-all duration-500 group-hover:rounded-xl">
-                <img
-                  src="https://images.unsplash.com/photo-1620121692029-d088224ddc74?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"
-                  alt="art cover"
-                  loading="lazy"
-                  width={1000}
-                  height={667}
-                  className="h-56 sm:h-full w-full object-cover object-top transition duration-500 group-hover:scale-105"
-                />
-              </div>
-              <div className="sm:p-2 sm:pl-0 sm:w-4/6">
-                <span className="mt-4 mb-2 inline-block font-medium text-gray-400 dark:text-gray-500 sm:mt-0">
-                  Jul 27 2022
-                </span>
-                <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">
-                  Provident de illo eveniet commodi fuga fugiat laboriosam
-                  expedita.
-                </h3>
-                <p className="my-6 text-gray-600 dark:text-gray-300">
-                  Laudantium in, voluptates ex placeat quo harum aliquam totam,
-                  doloribus eum impedit atque...
-                </p>
-                <div className="flex gap-4">
-                  <a
-                    href="#"
-                    className="px-3 py-1 rounded-full border border-gray-100 text-sm font-medium text-primary transition duration-300 hover:border-transparent hover:bg-primary hover:text-white dark:border-gray-700 dark:text-gray-300"
-                  >
-                    Tailwindcss
-                  </a>
-                  <a
-                    href="#"
-                    className="px-3 py-1 rounded-full border border-gray-100 text-sm font-medium text-primary transition duration-300 hover:border-transparent hover:bg-primary hover:text-white dark:border-gray-700 dark:text-gray-300"
-                  >
-                    VueJS
-                  </a>
-                </div>
-              </div>
-            </div>
+                </li>
+                <li className="text-black">Blog</li>
+              </ol>
+            </nav>
           </div>
         </div>
       </div>
+
+      <div className="grid gap-8 sm:gap-16 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 mb-10 mx-6 mt-5 me-5 m-5">
+        {blogPosts.map((post) => (
+          <div
+            key={post._id}
+            className="group relative -mx-4  sm:-mx-2 p-6 sm:p-8 rounded-3xl bg-white dark:bg-transparent border border-gray-400  hover:border-gray-100 dark:shadow dark:hover:border-gray-700 dark:hover:bg-gray-800 shadow-2xl shadow-black hover:shadow-gray-600/10 sm:gap-8 sm:flex transition duration-300 hover:z-10 mb-4 m-8"
+          >
+            <div className="sm:w-2/6 rounded-3xl overflow-hidden transition-all duration-500 group-hover:rounded-xl">
+              <img
+                src="https://images.unsplash.com/photo-1661749711934-492cd19a25c3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80"
+                alt="art cover"
+                loading="lazy"
+                width={1000}
+                height={667}
+                className="h-56 sm:h-full w-full object-cover object-top transition duration-500 group-hover:scale-105"
+              />
+            </div>
+            <div className="sm:p-2 sm:pl-0 sm:w-4/6 text-left">
+              <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">
+                {post.title}
+              </h3>
+              <p className="my-6 text-gray-600 dark:text-gray-300">
+                {post.content}
+              </p>
+              <span className="mt-4 mb-2 inline-block font-medium text-gray-400 dark:text-gray-500 sm:mt-0">
+                {post.date}
+              </span>
+
+              <div className="flex items-center justify-between">
+                <div>
+                  <img
+                    src="user-picture.jpg"
+                    alt="User"
+                    className="h-8 w-8 rounded-full object-cover"
+                  />
+                  <span className="text-gray-500 text-sm">{post.author}</span>
+                </div>
+                <div>
+                  <button className=" buttonInAddArticle bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    More Details
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="flex items-center justify-center mt-8">
+        <button
+          onClick={() => setShowForm(true)}
+          style={{ backgroundColor: "rgb(17, 24, 39)" }}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline my-6"
+        >
+          Create New Post
+        </button>
+      </div>
+
+      {showForm && (
+        <div className="fixed top-0 left-0 w-full h-full mt-5 flex items-center justify-center bg-gray-500 bg-opacity-50 z-50">
+          <div className="bg-white p-8 rounded shadow-md z-50 max-w-md w-full animate-fadeIn">
+            <h2 className="text-2xl font-bold mb-4 text-left">
+              Create New Blog Post
+            </h2>
+            <form>
+              <div className="mb-4">
+                <label
+                  htmlFor="title"
+                  className="block text-gray-700 font-bold mb-2 text-left"
+                >
+                  Title
+                </label>
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleInputChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="content"
+                  className="block text-gray-700 font-bold mb-2 text-left"
+                >
+                  Content
+                </label>
+                <textarea
+                  id="content"
+                  name="content"
+                  maxLength={50}
+                  value={formData.content}
+                  onChange={handleInputChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="author"
+                  className="block text-gray-700 font-bold mb-2 text-left"
+                >
+                  Author
+                </label>
+                <input
+                  type="text"
+                  id="author"
+                  name="author"
+                  value={formData.author}
+                  onChange={handleInputChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="tags"
+                  className="block text-gray-700 font-bold mb-2 text-left"
+                >
+                  Tags (comma-separated)
+                </label>
+                <input
+                  type="text"
+                  id="tags"
+                  name="tags"
+                  value={formData.tags}
+                  onChange={handleInputChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <button
+                  type="button"
+                  onClick={handleCreatePost}
+                  style={{ backgroundColor: "rgb(17, 24, 39)" }}
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                >
+                  Create Post
+                </button>
+                <button
+                  type="button"
+                  onClick={handleCancel}
+                  style={{ backgroundColor: "rgb(17, 24, 39)" }}
+                  className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
-}
+};
 
 export default Blog;

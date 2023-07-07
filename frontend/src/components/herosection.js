@@ -1,6 +1,7 @@
 import React from "react";
 import { BsArrowRight } from "react-icons/bs";
 import video from "../images/vedio.mp4";
+import { Link } from "react-router-dom";
 
 function Hero() {
   return (
@@ -36,7 +37,9 @@ function Hero() {
 
           {/* ::Hero button */}
           <button className="relative m-5 w-full md:w-2/3 lg:w-2/5  mx-5 border justify-center border-white rounded-lg px-4 inline-flex items-center text-2xl font-firacode text-white overflow-hidden transition-all duration-300 transform hover:translate-x-4">
-            <span className="relative -top-0.5 mr-2">Explore</span>
+            <Link to="/books">
+              <span className="relative -top-0.5 mr-2">Explore</span>
+            </Link>
             <BsArrowRight />
           </button>
         </div>

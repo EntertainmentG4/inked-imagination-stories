@@ -1,34 +1,41 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import Swal from "sweetalert2";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
-const PostsRequests = () => {
+function PostsRequests ()
+ {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  const fetchPosts = () => {
     axios
-      .get("http://localhost:5000/postsRequest")
+      .get('http://localhost:5000/postsRequest')
       .then((response) => {
         setPosts(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  };
 
-  const handleAccept = (postId) => {
+  const handleAccept = (post_id) => {
     Swal.fire({
-      title: "Confirmation",
-      text: "Are you sure you want to accept this post?",
-      icon: "question",
+      title: 'Confirmation',
+      text: 'Are you sure you want to accept this post?',
+      icon: 'question',
       showCancelButton: true,
-      confirmButtonText: "Accept",
-      cancelButtonText: "Cancel",
+      confirmButtonText: 'Accept',
+      cancelButtonText: 'Cancel',
     }).then((result) => {
-      if (result.isConfirmed) {
-        axios
-          .put(`http://localhost:5000/posts/${postId}`)
-          .then((response) => {})
+      if (result.isConfirmed) 
+      {
+        axios.put(`http://localhost:5000/postsAccept/${post_id}`)
+          .then((response) => {
+            fetchPosts(); 
+          })
           .catch((error) => {
             console.log(error);
           });
@@ -36,20 +43,22 @@ const PostsRequests = () => {
     });
   };
 
-  const handleReject = (postId) => {
+  const handleReject = (post_id) => {
     Swal.fire({
-      title: "Rejection Reason",
-      input: "text",
-      inputPlaceholder: "Enter rejection reason...",
+      title: 'Rejection Reason',
+      input: 'text',
+      inputPlaceholder: 'Enter rejection reason...',
       showCancelButton: true,
-      confirmButtonText: "Reject",
-      cancelButtonText: "Cancel",
+      confirmButtonText: 'Reject',
+      cancelButtonText: 'Cancel',
     }).then((result) => {
       if (result.isConfirmed && result.value) {
         const reason = result.value;
         axios
-          .put(`http://localhost:5000/posts/${postId}`, { reason })
-          .then((response) => {})
+          .put(`http://localhost:5000/postsReject/${post_id}`, { reason })
+          .then((response) => {
+            fetchPosts(); 
+          })
           .catch((error) => {
             console.log(error);
           });
@@ -57,18 +66,20 @@ const PostsRequests = () => {
     });
   };
 
+
+
   return (
     <div>
       {posts.length === 0 ? (
-        <p style={{ marginTop: "200px", textAlign: "center" }}>
-          No posts requests available
+        <p style={{ marginTop: '200px', textAlign: 'center' }}>
+          No post requests available
         </p>
       ) : (
         posts.map((post) => (
           <div
             key={post.post_id}
             className="bg-white rounded-lg shadow-md p-4 mb-4 mt-5 ms-5 hover:shadow-lg transition-shadow duration-300"
-            style={{ width: "355px" }}
+            style={{ width: '355px' }}
           >
             <div className="flex items-center mb-4">
               <img
@@ -101,6 +112,6 @@ const PostsRequests = () => {
       )}
     </div>
   );
-};
+}
 
 export default PostsRequests;

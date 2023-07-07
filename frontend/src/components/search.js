@@ -1,13 +1,11 @@
-import { Fragment, useContext } from "react";
 import { Combobox, Transition } from "@headlessui/react";
-import { useNavigate } from "react-router";
 
 const SearchBar = () => {
   return (
     <div className="fixed w-9/12 md:w-3/4 sm:top-4 md:top-20 lg:top-4 lg:w-96">
       <Combobox
       //  onChange={handleCardSelect}
-       >
+      >
         <div className="relative">
           <div className="relative w-full overflow-hidden text-left rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 sm:text-sm">
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -29,12 +27,12 @@ const SearchBar = () => {
             </div>
             <Combobox.Input
               className="border text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full pl-10 p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-gray-100"
-              displayValue={(person) => person.name}
+              // displayValue={(person) => person.name}
               // onChange={(event) => setSearchTerm(event.target.value)}
             />
           </div>
           <Transition
-            as={Fragment}
+            // as={Fragment}
             leave="transition ease-in duration-100"
             leaveFrom="opacity-100"
             leaveTo="opacity-0"

@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-const User = () => {
+function User ()
+ {
   const [users, setUsers] = useState([]);
+  const { user_id } = useParams();
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/usersData")
+      .get("http://localhost:5000/users") 
       .then((response) => {
         setUsers(response.data);
       })
@@ -16,7 +19,8 @@ const User = () => {
       });
   }, []);
 
-  const handleDelete = (userId) => {
+  
+  const handleDelete = (user_id) => {
     Swal.fire({
       title: "Confirmation",
       text: "Are you sure you want to delete this user?",
@@ -25,17 +29,19 @@ const User = () => {
       confirmButtonText: "Delete",
       cancelButtonText: "Cancel",
       dangerMode: true,
-    }).then((result) => {
-      if (result.isConfirmed) {
+    }).then((result) => { if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:5000/users/${userId}`)
-          .then((response) => {})
+          .patch(`http://localhost:5000/users/${user_id}`, { deleted: true })
+          .then((response) => {
+            setUsers(users.filter((user) => user.user_id !== user_id)); 
+          })
           .catch((error) => {
             console.log(error);
           });
       }
     });
   };
+
 
   return (
     <div className="container mx-auto py-10 md:w-4/5 w-11/12 px-1">
@@ -98,6 +104,6 @@ const User = () => {
       </div>
     </div>
   );
-};
+}
 
 export default User;
