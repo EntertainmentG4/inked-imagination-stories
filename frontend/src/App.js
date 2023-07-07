@@ -37,6 +37,8 @@ function App() {
   );
 }
 
+//هاض عشان يشتغل السيرفر اللي راح نجيب من الكتب
+
 // json-server --watch db.json --port 9000
 
 export default App;
