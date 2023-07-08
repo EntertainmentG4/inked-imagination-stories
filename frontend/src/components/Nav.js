@@ -64,7 +64,7 @@ function Nav() {
 
                   <div className="ml-4 md:flow-root lg:ml-6">
                     <NavLink
-                      to="user"
+                      to="UserProfile"
                       className="flex items-center p-2 -m-2 group"
                     >
                       <UserCircleIcon

@@ -18,7 +18,6 @@ CREATE TABLE contact (
   username VARCHAR(255) NOT NULL,
   phone_number VARCHAR(255) NOT NULL,
   email VARCHAR(255),
-  subject VARCHAR(255) NOT NULL,
   message TEXT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE

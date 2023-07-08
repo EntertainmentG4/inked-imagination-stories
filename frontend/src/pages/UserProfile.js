@@ -97,12 +97,7 @@ const UserProfile = () => {
               backgroundImage:
                 'url("https://static-cse.canva.com/blob/921439/ImagebyStanislavKondratievviaUnsplash.jpg")',
             }}
-          >
-            <span
-              id="blackOverlay"
-              className="w-full h-full absolute opacity-50 bg-black"
-            />
-          </div>
+          ></div>
           <div
             className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-70-px"
             style={{ transform: "translateZ(0px)" }}
