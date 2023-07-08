@@ -2,39 +2,37 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { HeartIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { MdOutlineExplore } from "react-icons/md";
-import SearchBar from "./search";
+import { FiLogIn } from "react-icons/fi";
 
 function Nav() {
   return (
     <header>
-      <div className="fixed top-0 left-0 right-0 z-30 py-2 overflow-hidden bg-gray-900">
+      <div className="fixed top-0 left-0 right-0 z-30 py-2 bg-gray-900">
         <div
           aria-label="Top"
           className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8"
         >
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center justify-between">
-              <div className="flex w-1/2 overflow-hidden sm:ml-4 md:w-1/12 lg:ml-0">
+          <div className="sm:flex items-center sm:justify-between h-28 sm:h-16">
+            <div className="sm:flex items-center sm:justify-between w-full pb-7 sm:pb-0">
+              <div className="">
                 <NavLink to="/">
                   <span className="sr-only">The Book Shelf</span>
                   <img
+                    className="w-20 sm:w-28 mt-5 sm:mt-0"
                     src="https://ik.imagekit.io/pb97gg2as/E-Commerce-Assets/logo-no-background.png?updatedAt=1684597528087"
                     alt="THE BOOK SHELF"
                   />
                 </NavLink>
               </div>
-              <div className="flex items-center justify-end w-4/5">
-                {/* Search bar for above mobile screen */}
-                <div className={`hidden relative w-1/4 mx-10 lg:block`}>
-                  <SearchBar />
-                </div>
-                <div className="flex justify-end w-3/4">
-                  <div className="hidden lg:block">
+
+              <div className="flex items-center justify-end w-4/5 mt-10 ml-20 px-4 sm:mt-0 sm:ms-0 sm:px-0">
+                <div className="flex items-center justify-end w-3/4">
+                  <div>
                     <NavLink
-                      to="books"
+                      to="/books"
                       className="flex items-center p-2 -m-2 text-gray-100 rounded-md hover:bg-gray-700 group"
                     >
-                      Explore
+                      Books
                       <MdOutlineExplore className="flex-shrink-0 w-6 h-6 ml-2 text-gray-100 group-hover:text-white" />
                       <span className="sr-only">products explore</span>
                     </NavLink>
@@ -43,9 +41,10 @@ function Nav() {
                     className="w-px h-6 ml-4 bg-gray-700 lg:ml-6"
                     aria-hidden="true"
                   />
+
                   <div className="flow-root ml-4 lg:ml-6">
                     <NavLink
-                      to="wishlist"
+                      to="/wishlist"
                       className="flex items-center p-2 -m-2 group"
                     >
                       <HeartIcon
@@ -58,23 +57,11 @@ function Nav() {
                       <span className="sr-only">favorite items view</span>
                     </NavLink>
                   </div>
-                  {/* <div className="flow-root ml-4 lg:ml-6">
-                    <NavLink
-                      to="cart"
-                      className="flex items-center p-2 -m-2 group"
-                    >
-                      <ShoppingBagIcon
-                        className="flex-shrink-0 w-6 h-6 text-gray-100 group-hover:text-gray-50"
-                        aria-hidden="true"
-                      />
-                      <span className="ml-1 text-xs font-medium text-gray-100 sm:ml-2 sm:text-sm group-hover:text-gray-50"></span>
-                      <span className="sr-only">items in cart, view bag</span>
-                    </NavLink>
-                  </div> */}
                   <span
                     className="w-px h-6 ml-4 bg-gray-700 lg:ml-6"
                     aria-hidden="true"
                   />
+
                   <div className="ml-4 md:flow-root lg:ml-6">
                     <NavLink
                       to="user"
@@ -87,23 +74,30 @@ function Nav() {
                       <span className="sr-only">user profile view</span>
                     </NavLink>
                   </div>
+                  <span
+                    className="w-px h-6 ml-4 bg-gray-700 lg:ml-6"
+                    aria-hidden="true"
+                  />
+
+                  <div className="ml-4 md:flow-root lg:ml-6">
+                    <NavLink
+                      to="login"
+                      className="flex items-center p-2 -m-2 group"
+                    >
+                      <FiLogIn
+                        className="flex-shrink-0 w-6 h-6 text-gray-100 group-hover:text-white"
+                        aria-hidden="true"
+                      />
+                      <span className="sr-only">user profile view</span>
+                    </NavLink>
+                  </div>
+                  <span
+                    className="w-px h-6 ml-4 bg-gray-700 lg:ml-6"
+                    aria-hidden="true"
+                  />
                 </div>
               </div>
             </div>
-          </div>
-          {/* Search bar for below computer */}
-          <div className="p-2 bg-gray-800 rounded-lg lg:hidden">
-            <span className="flex justify-end p-2">
-              <NavLink
-                to="books"
-                className="flex items-center p-2 -m-2 text-gray-100 rounded-md hover:bg-gray-700 group"
-              >
-                {" "}
-                <span className="hidden md:block">Explore</span>
-                <MdOutlineExplore className="flex-shrink-0 w-6 h-6 text-gray-100 sm:ml-2 group-hover:text-white" />
-                <span className="sr-only">products explore</span>
-              </NavLink>
-            </span>
           </div>
         </div>
       </div>

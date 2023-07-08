@@ -1,42 +1,49 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import jwtDecode from "jwt-decode";
 
 const Blog = () => {
   const [blogPosts, setBlogPosts] = useState([]);
   const [formData, setFormData] = useState({
     title: "",
     content: "",
-    author: "",
-    tags: "",
-    date: new Date().toISOString().split("T")[0],
+    created_at: new Date().toISOString().split("T")[0],
   });
   const [showForm, setShowForm] = useState(false);
 
-  const fetchBlogPosts = () => {
-    // Simulated blog posts
-    const posts = [
-      {
-        _id: 1,
-        title: "Blog Post 1",
-        content: "This is the content of Blog Post 1.",
-        author: "John Doe",
-        tags: "Technology",
-        date: "2023-07-01",
-      },
-      {
-        _id: 2,
-        title: "Blog Post 2",
-        content: "This is the content of Blog Post 2.",
-        author: "Jane Smith",
-        tags: "Travel",
-        date: "2023-07-02",
-      },
-      // Add more simulated blog posts as needed
-    ];
+  /////////////////////////
+  const [user_id, setUser_id] = useState();
 
-    setBlogPosts(posts);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        const id = decodedToken.user_id;
+        setUser_id(id);
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
+    }
+  }, []);
+  /////////////////////////
+
+  // Fetch All Posts From the DB
+  const fetchBlogPosts = () => {
+    axios
+      .get("http://localhost:5000/getAllPosts")
+      .then((response) => {
+        const posts = response.data;
+        setBlogPosts(posts);
+      })
+      .catch((error) => {
+        console.error("Error fetching blog posts:", error);
+      });
   };
 
+  // Set the FormData to the data entered by the user
   const handleInputChange = (event) => {
     setFormData({
       ...formData,
@@ -44,20 +51,56 @@ const Blog = () => {
     });
   };
 
-  const handleCreatePost = () => {
+  // Handle the creation of the new post
+  const handleCreatePost = (user_id) => {
     const newPost = {
-      _id: blogPosts.length + 1,
+      user_id: user_id,
       ...formData,
     };
 
-    newPost.date = new Date(newPost.date).toLocaleDateString("en-US", {
+    newPost.date = new Date(newPost.created_at).toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
       day: "numeric",
     });
 
-    setBlogPosts([...blogPosts, newPost]);
-    setShowForm(false);
+    Swal.fire({
+      title: "Create Post",
+      text: "Are you sure you want to create this post?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Create",
+      cancelButtonText: "Cancel",
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .post("http://localhost:5000/createPost", newPost)
+          .then((response) => {
+            Swal.fire({
+              title: "Success",
+              text: "Post created successfully!",
+              icon: "success",
+            });
+
+            setShowForm(false); // Close the form
+            setFormData({
+              title: "",
+              content: "",
+              created_at: new Date().toISOString().split("T")[0],
+            });
+            fetchBlogPosts(); // Refetch the posts
+          })
+          .catch((error) => {
+            console.error(error);
+            Swal.fire({
+              title: "Error",
+              text: "An error occurred while creating the post.",
+              icon: "error",
+            });
+          });
+      }
+    });
   };
 
   const handleCancel = () => {
@@ -65,7 +108,7 @@ const Blog = () => {
   };
 
   // Call the fetchBlogPosts function when the component mounts
-  React.useEffect(() => {
+  useEffect(() => {
     fetchBlogPosts();
   }, []);
 
@@ -113,12 +156,12 @@ const Blog = () => {
       <div className="grid gap-8 sm:gap-16 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 mb-10 mx-6 mt-5 me-5 m-5">
         {blogPosts.map((post) => (
           <div
-            key={post._id}
+            key={post.post_id}
             className="group relative -mx-4  sm:-mx-2 p-6 sm:p-8 rounded-3xl bg-white dark:bg-transparent border border-gray-400  hover:border-gray-100 dark:shadow dark:hover:border-gray-700 dark:hover:bg-gray-800 shadow-2xl shadow-black hover:shadow-gray-600/10 sm:gap-8 sm:flex transition duration-300 hover:z-10 mb-4 m-8"
           >
             <div className="sm:w-2/6 rounded-3xl overflow-hidden transition-all duration-500 group-hover:rounded-xl">
               <img
-                src="https://images.unsplash.com/photo-1661749711934-492cd19a25c3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80"
+                src="https://media.istockphoto.com/id/1326409389/vector/new-blog-post-origami-style-speech-bubble-banner-sticker-design-template-with-new-blog-post.jpg?s=612x612&w=0&k=20&c=s9FKf7LkahjhvHLfTvtRBMCe_vso8TrH3BO-9e2QrIY="
                 alt="art cover"
                 loading="lazy"
                 width={1000}
@@ -131,8 +174,11 @@ const Blog = () => {
                 {post.title}
               </h3>
               <p className="my-6 text-gray-600 dark:text-gray-300">
-                {post.content}
+                {post.content.length > 100
+                  ? `${post.content.slice(0, 50)}...`
+                  : post.content}
               </p>
+
               <span className="mt-4 mb-2 inline-block font-medium text-gray-400 dark:text-gray-500 sm:mt-0">
                 {post.date}
               </span>
@@ -140,16 +186,18 @@ const Blog = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <img
-                    src="user-picture.jpg"
+                    src={post.profile_picture}
                     alt="User"
                     className="h-8 w-8 rounded-full object-cover"
                   />
-                  <span className="text-gray-500 text-sm">{post.author}</span>
+                  <span className="text-gray-500 text-sm">{post.username}</span>
                 </div>
                 <div>
-                  <button className=" buttonInAddArticle bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                    More Details
-                  </button>
+                  <Link to={`/postdetails/${post.post_id}`}>
+                    <button className=" buttonInAddArticle bg-blue-500 hover:bg-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                      More Details
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -160,10 +208,32 @@ const Blog = () => {
       <div className="flex items-center justify-center mt-8">
         <button
           onClick={() => setShowForm(true)}
-          style={{ backgroundColor: "rgb(17, 24, 39)" }}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline my-6"
+          style={{
+            backgroundColor: "#fff", // Set the background color to white
+            color: "rgb(17, 24, 39)", // Set the text color to the desired color
+            border: "1px solid gray",
+            position: "fixed",
+            bottom: "2rem",
+            right: "2rem",
+            width: "4rem", // Adjust the size as needed
+            height: "4rem", // Adjust the size as needed
+          }}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full focus:outline-none focus:shadow-outline z-50"
         >
-          Create New Post
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 m-auto" // Center the plus icon vertically and horizontally
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+            />
+          </svg>
         </button>
       </div>
 
@@ -200,40 +270,7 @@ const Blog = () => {
                 <textarea
                   id="content"
                   name="content"
-                  maxLength={50}
                   value={formData.content}
-                  onChange={handleInputChange}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="author"
-                  className="block text-gray-700 font-bold mb-2 text-left"
-                >
-                  Author
-                </label>
-                <input
-                  type="text"
-                  id="author"
-                  name="author"
-                  value={formData.author}
-                  onChange={handleInputChange}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="tags"
-                  className="block text-gray-700 font-bold mb-2 text-left"
-                >
-                  Tags (comma-separated)
-                </label>
-                <input
-                  type="text"
-                  id="tags"
-                  name="tags"
-                  value={formData.tags}
                   onChange={handleInputChange}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
@@ -241,7 +278,7 @@ const Blog = () => {
               <div className="flex items-center justify-between">
                 <button
                   type="button"
-                  onClick={handleCreatePost}
+                  onClick={() => handleCreatePost(user_id)}
                   style={{ backgroundColor: "rgb(17, 24, 39)" }}
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 >

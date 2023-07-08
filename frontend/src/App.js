@@ -12,12 +12,16 @@ import Books from "./pages/books";
 import Postdetails from "./components/postdetails";
 import Addcomments from "./components/addcomments";
 import Wishlist from "./pages/wishList";
+import NavMenu from "./components/secondNav";
+import UserProfile from "./pages/UserProfile";
+import EditForm from "./components/EditProfile";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Nav />
+        <NavMenu />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/AboutUs" element={<AboutUs />} />
@@ -27,9 +31,11 @@ function App() {
           <Route path="/Blog" element={<Blog />} />
           <Route path="/books" element={<Books />} />
           <Route path="/blog" element={<Blog />} />
-          <Route path="/Postdetails" element={<Postdetails />} />
+          <Route path="/Postdetails/:post_id" element={<Postdetails />} />
           <Route path="/Addcomments" element={<Addcomments />} />
           <Route path="/Wishlist" element={<Wishlist />} />
+          <Route path="/UserProfile" element={<UserProfile />} />
+          <Route path="/editForm" element={<EditForm />} />
         </Routes>
         <Footer />
       </BrowserRouter>

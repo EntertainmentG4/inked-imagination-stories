@@ -2,11 +2,11 @@ const db = require("../model/db");
 
 // contact us page
 const postContactMessages = (req, res) => {
-  const { name, phone_number, message, email } = req.body;
+  const { user_id, name, phone_number, message, email } = req.body;
 
   const sql =
-    "INSERT INTO contact (username,phone_number,message,email) VALUES ($1, $2, $3, $4)";
-  const values = [name, phone_number, message, email];
+    "INSERT INTO contact (username,phone_number,message,email,user_id) VALUES ($1, $2, $3, $4,$5)";
+  const values = [name, phone_number, message, email, user_id];
 
   db.query(sql, values, (error, results) => {
     if (error) {

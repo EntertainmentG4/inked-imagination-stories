@@ -9,5 +9,4 @@ router.post("/LoginUser", signUpController.checkUser);
 router.get("/getUserById/:id", signUpController.getUserById);
 router.delete("/deleteUser/:id", signUpController.deleteUser);
 
-
 module.exports = router;

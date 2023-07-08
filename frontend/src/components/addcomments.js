@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { format } from "date-fns";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
 import {
   Popover,
   PopoverHandler,
@@ -8,33 +8,110 @@ import {
   Button,
   Input,
 } from "@material-tailwind/react";
+import jwtDecode from "jwt-decode";
 
-function AddComments() {
+function AddComments({ post_id }) {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [commentToUpdate, setCommentToUpdate] = useState("");
   const [updatedComment, setUpdatedComment] = useState("");
+  const [selectedCommentId, setSelectedCommentId] = useState();
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+
+  //////////////////
+  const [user_id, setUser_id] = useState();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        const id = decodedToken.user_id;
+        setUser_id(id);
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
+    }
+  }, []);
+  //////////////////
+
+  const getComments = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/getPostComments/${post_id}/comments`
+      );
+      setComments(response.data);
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+    }
+  };
+
+  useEffect(() => {
+    getComments();
+  }, [post_id]);
+
+  const postComment = async () => {
+    try {
+      const comment = {
+        content: newComment,
+        user_id: user_id,
+      };
+
+      const response = await axios.post(
+        `http://localhost:5000/postComments/${post_id}/comments`,
+        comment
+      );
+      setComments([...comments, response.data]);
+      setNewComment("");
+      getComments();
+    } catch (error) {
+      console.error("Error posting comment:", error);
+    }
+  };
 
   const handleAddComment = () => {
     if (newComment.trim() === "") {
       return;
     }
-    const comment = {
-      id: uuidv4(),
-      text: newComment,
-      time: format(new Date(), "dd/MM/yyyy HH:mm"),
-      avatar: "https://via.placeholder.com/40",
-      name: "John Doe",
-    };
-    setComments([...comments, comment]);
-    setNewComment("");
+    postComment();
   };
 
   const handleDeleteComment = (commentId) => {
-    const updatedComments = comments.filter(
-      (comment) => comment.id !== commentId
-    );
-    setComments(updatedComments);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        try {
+          axios
+            .delete(
+              `http://localhost:5000/DeleteComments/${commentId}/${user_id}`
+            )
+            .then(() => {
+              const updatedCommentList = comments.filter(
+                (comment) => comment.comment_id !== commentId
+              );
+              setComments(updatedCommentList);
+              getComments();
+              Swal.fire(
+                "Deleted!",
+                "Your comment has been deleted.",
+                "success"
+              );
+            })
+            .catch((error) => {
+              console.error("Error deleting comment:", error);
+            });
+        } catch (error) {
+          console.error("Error deleting comment:", error);
+        }
+      }
+    });
   };
 
   const handleUpdateComment = (event) => {
@@ -42,24 +119,40 @@ function AddComments() {
     setUpdatedComment(value);
   };
 
-  const handleEditForm = (event) => {
+  const handleEditForm = async (event) => {
     event.preventDefault();
-    const updatedComments = comments.map((comment) => {
-      if (comment.id === commentToUpdate) {
-        return {
-          ...comment,
-          text: updatedComment,
-        };
+    try {
+      const updatedComments = comments.map((comment) => {
+        if (comment.comment_id === selectedCommentId) {
+          return {
+            ...comment,
+            content: updatedComment,
+          };
+        }
+        return comment;
+      });
+
+      const response = await axios.patch(
+        `http://localhost:5000/UpdateComments/${selectedCommentId}`,
+        { content: updatedComment }
+      );
+
+      if (response.status === 200) {
+        setComments(updatedComments);
+        setSelectedCommentId("");
+        setUpdatedComment("");
+        setIsPopoverOpen(false);
+      } else {
+        console.error("Error updating comment:", response.data);
       }
-      return comment;
-    });
-    setComments(updatedComments);
-    setCommentToUpdate("");
-    setUpdatedComment("");
+    } catch (error) {
+      console.error("Error updating comment:", error);
+    }
   };
 
   const handleEditPopover = (commentId) => {
-    setCommentToUpdate(commentId);
+    setSelectedCommentId(commentId);
+    setIsPopoverOpen(true);
   };
 
   return (
@@ -74,7 +167,7 @@ function AddComments() {
           {comments.length > 0 &&
             comments.map((item) => (
               <div
-                key={item.id}
+                key={item.comment_id}
                 className="flex content-center py-4 border-b border-gray-700"
               >
                 <div className="flex w-full px-10 justify-between">
@@ -82,56 +175,62 @@ function AddComments() {
                     <div className="flex mb-4">
                       <img
                         className="w-8 h-8 rounded-full"
-                        src={item.avatar}
+                        src={item.profile_picture}
                         alt="Avatar"
                       />
-                      <p className="ms-3">{item.name}</p>
+                      <p className="ms-3">{item.username}</p>
                     </div>
                     <div className="flex flex-col items-start justify-between w-full space-y-2 sm:flex-row">
-                      <p className="text-xs text-gray-500">{item.time} </p>
+                      <p className="text-xs text-gray-500">
+                        {item.created_at}{" "}
+                      </p>
                     </div>
                   </div>
                   <div className="col-span-2">
-                    <p className="text-md">{item.text}</p>
+                    <p className="text-md">{item.content}</p>
                   </div>
                   <div className="flex flex-col">
-                    <Button
-                      className="text-red-500 text-xs hover:text-red-700 ml-2 mb-2 font-semibold bg-transparent"
-                      onClick={() => handleDeleteComment(item.id)}
-                    >
-                      DELETE
-                    </Button>
-                    <Popover className="bg-gray-500">
-                      <PopoverHandler
-                        onClick={() => handleEditPopover(item.id)}
-                      >
-                        <Button className="bg-transparent text-xs text-gray-500 ml-2">
-                          Edit
-                        </Button>
-                      </PopoverHandler>
-                      <PopoverContent className="border text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block pl-10 p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-gray-100">
-                        <form
-                          className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
-                          onSubmit={handleEditForm}
+                    {item.user_id === user_id && ( // Conditional rendering for edit and delete buttons
+                      <>
+                        <Button
+                          className="text-red-500 text-xs hover:text-red-700 ml-2 mb-2 font-semibold bg-transparent"
+                          onClick={() => handleDeleteComment(item.comment_id)}
                         >
-                          <div className="mb-4 flex flex-col gap-6">
-                            <Input
-                              size="lg"
-                              className="border text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block bg-gray-700 border-gray-600 placeholder-gray-400 text-gray-100"
-                              value={updatedComment}
-                              onChange={handleUpdateComment}
-                            />
-                          </div>
-                          <Button
-                            className="text-xs lg:text-sm font-medium text-center text-gray-100 rounded-lg bg-cyan-900 focus:ring-4 focus:outline-none hover:bg-cyan-950 focus:ring-cyan-950"
-                            fullWidth
-                            type="submit"
+                          DELETE
+                        </Button>
+                        <Popover className="bg-gray-500">
+                          <PopoverHandler
+                            onClick={() => handleEditPopover(item.comment_id)}
                           >
-                            Edit
-                          </Button>
-                        </form>
-                      </PopoverContent>
-                    </Popover>
+                            <Button className="bg-transparent text-xs text-gray-500 ml-2">
+                              Edit
+                            </Button>
+                          </PopoverHandler>
+                          <PopoverContent className="border text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block pl-10 p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-gray-100">
+                            <form
+                              className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
+                              onSubmit={handleEditForm}
+                            >
+                              <div className="mb-4 flex flex-col gap-6">
+                                <Input
+                                  size="lg"
+                                  className="border text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block bg-gray-700 border-gray-600 placeholder-gray-400 text-gray-100"
+                                  value={updatedComment}
+                                  onChange={handleUpdateComment}
+                                />
+                              </div>
+                              <Button
+                                className="text-xs lg:text-sm font-medium text-center text-gray-100 rounded-lg bg-cyan-900 focus:ring-4 focus:outline-none hover:bg-cyan-950 focus:ring-cyan-950"
+                                fullWidth
+                                type="submit"
+                              >
+                                Edit
+                              </Button>
+                            </form>
+                          </PopoverContent>
+                        </Popover>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>

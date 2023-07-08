@@ -1,7 +1,6 @@
 const db = require("../model/db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const router = require("../routers/admin");
 
 function tokenGenerator({ user_id, role, username, email }) {
   const payload = { user_id, role, username, email };
@@ -85,7 +84,7 @@ const deleteUserFromWebSite = (req, res) => {
 
 // To get all the users
 const getAllUsersData = (req, res) => {
-  db.query("SELECT * FROM users", (error, result) => {
+  db.query("SELECT * FROM users WHERE deleted='false' ", (error, result) => {
     if (error) {
       console.error("Error fetching users:", error);
       res.status(500).json({ error: "Internal server error" });
@@ -98,12 +97,67 @@ const getAllUsersData = (req, res) => {
 // Get all posts with status 'pending'
 const getAllPostsWherePending = async (req, res) => {
   try {
-    const query = "SELECT * FROM posts WHERE post_status = $1";
+    const query = `
+      SELECT 
+        posts.*, 
+        users.username, 
+        users.profile_picture 
+      FROM 
+        posts 
+      INNER JOIN 
+        users 
+      ON 
+        posts.user_id = users.user_id 
+      WHERE 
+        posts.post_status = $1
+    `;
     const values = ["pending"];
     const result = await db.query(query, values);
     res.json(result.rows);
   } catch (error) {
     console.error("Error retrieving pending posts:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+// Get all posts with status 'pending'
+const getAllPostsWhereAccept = async (req, res) => {
+  try {
+    const query = `
+      SELECT 
+        posts.*, 
+        users.username, 
+        users.profile_picture 
+      FROM 
+        posts 
+      INNER JOIN 
+        users 
+      ON 
+        posts.user_id = users.user_id 
+      WHERE 
+        posts.post_status = $1
+    `;
+    const values = ["accepted"];
+    const result = await db.query(query, values);
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Error retrieving pending posts:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+// Delete a post
+const deletePostAdmin = async (req, res) => {
+  const postId = req.params.postId;
+
+  try {
+    const query = "DELETE FROM posts WHERE post_id = $1";
+    const values = [postId];
+    await db.query(query, values);
+
+    res.sendStatus(200);
+  } catch (error) {
+    console.error("Error deleting post:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
@@ -130,12 +184,47 @@ const updatePostStatusReject = async (req, res) => {
     const query =
       "UPDATE posts SET post_status = $1, rejection_reason = $2 WHERE post_id = $3";
     const values = ["rejected", reason, post_id];
-    await pool.query(query, values);
+    await db.query(query, values);
     res.sendStatus(200);
   } catch (error) {
     console.error("Error rejecting the post:", error);
     res.status(500).json({ error: "Internal server error" });
   }
+};
+
+// Route to get all comments
+const getAllComments = (req, res) => {
+  db.query(
+    "SELECT comments.*, users.username, users.profile_picture FROM comments JOIN users ON comments.user_id = users.user_id",
+    (error, result) => {
+      if (error) {
+        console.error("Error retrieving comments:", error);
+        res.status(500).json({ error: "Internal server error" });
+      } else {
+        res.json(result.rows);
+      }
+    }
+  );
+};
+
+// Route to delete a specific comment
+const deleteCommentById = (req, res) => {
+  const { commentId } = req.params;
+
+  db.query(
+    "DELETE FROM comments WHERE comment_id = $1",
+    [commentId],
+    (error, result) => {
+      if (error) {
+        console.error("Error deleting comment:", error);
+        res.status(500).json({ error: "Internal server error" });
+      } else if (result.rowCount === 0) {
+        res.status(404).json({ error: "Comment not found" });
+      } else {
+        res.sendStatus(204);
+      }
+    }
+  );
 };
 
 module.exports = {
@@ -146,4 +235,8 @@ module.exports = {
   getAllPostsWherePending,
   updatePostStatusAccept,
   updatePostStatusReject,
+  getAllComments,
+  deleteCommentById,
+  getAllPostsWhereAccept,
+  deletePostAdmin,
 };

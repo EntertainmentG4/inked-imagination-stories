@@ -1,57 +1,68 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
 import Addcomments from "./addcomments";
-
-const product = {
-  _id: "1bc40356-9c89-4cbf-a2d6-2ce12cf85db0",
-  title: "Thinking, Fast and Slow",
-  author: "Daniel Kahneman",
-  imgUrl: "https://m.media-amazon.com/images/I/71m+kC4vOxL.jpg",
-  reviews: [
-    {
-      username: "CognitiveScienceEnthusiast",
-      rating: 3,
-      comment:
-        "Kahneman's exploration of the two systems of thinking is mind-blowing. A must-read for anyone interested in decision-making and human behavior.",
-      date: "2022-10-28",
-    },
-    {
-      username: "PsychologyStudent",
-      rating: 4.7,
-      comment:
-        "An insightful book that challenges the way we think and perceive the world. Kahneman's Nobel Prize-winning research is brilliantly explained.",
-      date: "2022-10-20",
-    },
-  ],
-  description:
-    "In 'Thinking, Fast and Slow,' Daniel Kahneman, a renowned psychologist and Nobel laureate, explores the fascinating realm of human decision-making and presents his influential research on the two systems of thinking that drive our choices and judgments. Through vivid examples and thought-provoking anecdotes, Kahneman challenges conventional wisdom, shedding light on the workings of the mind and providing valuable insights into the complexities of human behavior. This captivating masterpiece invites readers to reconsider their understanding of decision-making and gain a deeper understanding of the intricacies of the human mind.",
-  id: "1",
-};
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 function Postdetails() {
+  const { post_id } = useParams();
+  const [post, setPost] = useState();
+
+  const fetchBlogPost = () => {
+    axios
+      .get(`http://localhost:5000/getPostById/${post_id}`)
+      .then((response) => {
+        const result = response.data;
+        setPost(result);
+      })
+      .catch((error) => {
+        console.error("Error fetching blog posts:", error);
+      });
+  };
+
+  useEffect(() => {
+    fetchBlogPost();
+  }, []);
+
+  function convertDate(timestamp) {
+    const date = new Date(timestamp);
+    return date.toLocaleString();
+  }
+
   return (
     <>
       <section
         className="overflow-hidden text-gray-100 mt-10"
         style={{ backgroundColor: "#111827" }}
       >
-        {product && (
+        {post && (
           <div className="container px-5 pt-32 pb-4 mx-auto sm:py-24">
-            <div className="flex flex-wrap items-center mx-auto lg:max-w-5xl">
-              <img
-                alt="img"
-                className="object-cover object-center w-full rounded h-1/2 lg:w-1/4"
-                src={product.imgUrl}
-              />
-
-              <div className="w-full mt-6 lg:w-2/3 lg:pl-10 py-0 lg:mt-0">
+            <div
+              className="flex flex-wrap items-center mx-auto lg:max-w-5xl shadow-md rounded-lg p-8 hover:shadow-lg"
+              style={{ boxShadow: "0 0 10px rgba(255, 255, 255, 0.3)" }}
+            >
+              <div className="w-full text-left mt-6 lg:w-full lg:pl-10 py-0 lg:mt-0">
+                <div className="flex items-center mb-4">
+                  <img
+                    src={post.profile_picture}
+                    alt="User"
+                    className="w-10 h-10 rounded-full mr-2"
+                  />
+                  <h2 className="text-lg font-medium text-gray-100">
+                    {post.username}
+                  </h2>
+                </div>
                 <h1 className="text-3xl font-medium text-gray-100 title-font mb-8">
-                  {product.title}
+                  {post.title}
                 </h1>
-                <p className="leading-relaxed">{product.description}</p>
+                <p className="text-gray-300 mb-4">
+                  {convertDate(post.created_at)}
+                </p>
+                <p className="leading-relaxed">{post.content}</p>
               </div>
             </div>
             <div>
-              <Addcomments />
+              <Addcomments post_id={post.post_id} />
             </div>
           </div>
         )}

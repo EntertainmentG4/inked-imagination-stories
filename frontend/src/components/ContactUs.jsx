@@ -1,21 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import jwtDecode from "jwt-decode";
 
 function ContactUs() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phone_number, setphone_number] = useState("");
   const [message, setMessage] = useState("");
+
+  const [user_id, setUser_id] = useState();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        const id = decodedToken.user_id;
+        setUser_id(id);
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
+    } else {
+      setUser_id(null);
+    }
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const contactMessage = {
+      user_id,
       name,
       email,
-      phone,
+      phone_number,
       message,
     };
 
@@ -30,7 +49,7 @@ function ContactUs() {
 
         setName("");
         setEmail("");
-        setPhone("");
+        setphone_number("");
         setMessage("");
       } else {
         Swal.fire("Error", "Failed to send message.", "error");
@@ -46,7 +65,7 @@ function ContactUs() {
         className="bg-cover bg-center h-screen"
         style={{
           backgroundImage:
-            'url("https://media.istockphoto.com/id/1416335096/photo/businessman-hand-holding-smart-phone-with-icon-mobile-phone-mail-telephone-and-address.jpg?b=1&s=170667a&w=0&k=20&c=O39_wq7HB2oZHV3pyeZDxFAq0Xb_zNvLKrAIEWDVveY=")',
+            'url("https://media.istockphoto.com/id/1416335096/photo/businessman-hand-holding-smart-phone-with-icon-mobile-phone-mail-telephone-and-address.webp?b=1&s=170667a&w=0&k=20&c=O39_wq7HB2oZHV3pyeZDxFAq0Xb_zNvLKrAIEWDVveY=")',
           height: "400px",
         }}
       >
@@ -133,7 +152,7 @@ function ContactUs() {
                     </div>
                     <div className="w-full">
                       <h4 className="text-dark mb-1 text-xl font-bold">
-                        Phone Number
+                        phone_number Number
                       </h4>
                       <p className="text-body-color text-base">
                         (+962)780577727
@@ -188,10 +207,12 @@ function ContactUs() {
                     <div className="mb-6">
                       <input
                         type="text"
-                        placeholder="Your Phone"
+                        placeholder="Your phone_number"
                         className="text-black border-[f0f0f0] focus:border-primary w-full rounded border py-3 px-[14px] text-base outline-none focus-visible:shadow-none shadow-md transition duration-300"
-                        value={phone}
-                        onChange={(event) => setPhone(event.target.value)}
+                        value={phone_number}
+                        onChange={(event) =>
+                          setphone_number(event.target.value)
+                        }
                         required
                       />
                     </div>

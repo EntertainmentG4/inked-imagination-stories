@@ -4,22 +4,30 @@ import Users from "./Users";
 import logo from "../images/book.png";
 import PostsRequests from "./PostsRequests";
 import Messages from "./Messages";
+import AllComments from "./allComments";
+import PostCard from "./postCard";
 export default function Sidebar() {
-  const [selectedComponent, setSelectedComponent] = useState("labs");
+  const [selectedComponent, setSelectedComponent] = useState("Users");
+  const [activeMenuItem, setActiveMenuItem] = useState(true);
 
   const renderComponent = () => {
-    if (selectedComponent === "labs") {
+    if (selectedComponent === "Users") {
       return <Users />;
     } else if (selectedComponent === "PostsRequests") {
       return <PostsRequests />;
     } else if (selectedComponent === "Messages") {
       return <Messages />;
+    } else if (selectedComponent === "AllComments") {
+      return <AllComments />;
+    } else if (selectedComponent === "PostCard") {
+      return <PostCard />;
     }
     return null;
   };
 
   const handleComponentClick = (component) => {
     setSelectedComponent(component);
+    setActiveMenuItem(component);
   };
 
   const [show, setShow] = useState(false);
@@ -38,8 +46,10 @@ export default function Sidebar() {
             </div>
             <ul aria-orientation="vertical" className="ms-5 mt-5 py-6">
               <li
-                className="pl-6 cursor-pointer text-white-600 text-md leading-3 tracking-normal pb-4 pt-5 text-indigo-700 focus:text-indigo-700 focus:outline-none"
-                onClick={() => handleComponentClick("labs")}
+                className={`pl-6 cursor-pointer text-white-600 text-md leading-3 tracking-normal pb-4 pt-5 text-indigo-700 focus:text-indigo-700 focus:outline-none ${
+                  activeMenuItem === "Users" ? "active" : ""
+                }`}
+                onClick={() => handleComponentClick("Users")}
               >
                 <Link className="flex items-center">
                   <div>
@@ -66,7 +76,9 @@ export default function Sidebar() {
                 </Link>
               </li>
               <li
-                className="pl-6 cursor-pointer text-white-600 text-md leading-3 tracking-normal mt-4 mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none"
+                className={`pl-6 cursor-pointer text-white-600 text-md leading-3 tracking-normal pb-4 pt-5 text-indigo-700 focus:text-indigo-700 focus:outline-none ${
+                  activeMenuItem === "PostsRequests" ? "active" : ""
+                }`}
                 onClick={() => handleComponentClick("PostsRequests")}
               >
                 <div className="flex items-center">
@@ -89,7 +101,9 @@ export default function Sidebar() {
                 </div>
               </li>
               <li
-                className="pl-6 cursor-pointer text-white-600 text-md leading-3 tracking-normal mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none"
+                className={`pl-6 cursor-pointer text-white-600 text-md leading-3 tracking-normal pb-4 pt-5 text-indigo-700 focus:text-indigo-700 focus:outline-none ${
+                  activeMenuItem === "Messages" ? "active" : ""
+                }`}
                 onClick={() => handleComponentClick("Messages")}
               >
                 <div className="flex items-center">
@@ -113,8 +127,8 @@ export default function Sidebar() {
                 </div>
               </li>
               <li
-                className="pl-6 cursor-pointer text-white-600 text-md leading-3 tracking-normal py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none"
-                onClick={() => handleComponentClick("approvedTests")}
+                className="pl-6 mt-3 cursor-pointer text-white-600 text-md leading-3 tracking-normal py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none"
+                onClick={() => handleComponentClick("AllComments")}
               >
                 <div className="flex items-center">
                   <svg
@@ -134,7 +148,32 @@ export default function Sidebar() {
                     <polyline points="17 8 21 12 17 16" />
                     <line x1={14} y1={4} x2={10} y2={20} />
                   </svg>
-                  <span className="ml-2">Approved Tests</span>
+                  <span className="ml-2">All Comments</span>
+                </div>
+              </li>
+              <li
+                className="pl-6 mt-3 cursor-pointer text-white-600 text-md leading-3 tracking-normal py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none"
+                onClick={() => handleComponentClick("PostCard")}
+              >
+                <div className="flex items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="icon icon-tabler icon-tabler-code"
+                    width={20}
+                    height={20}
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path stroke="none" d="M0 0h24v24H0z" />
+                    <polyline points="7 8 3 12 7 16" />
+                    <polyline points="17 8 21 12 17 16" />
+                    <line x1={14} y1={4} x2={10} y2={20} />
+                  </svg>
+                  <span className="ml-2">Posts </span>
                 </div>
               </li>
             </ul>
@@ -186,7 +225,7 @@ export default function Sidebar() {
                   <ul aria-orientation="vertical" className="mt-5 py-6">
                     <li
                       className="pl-6 cursor-pointer text-white-600 text-md leading-3 tracking-normal pb-4 pt-5 text-indigo-700 focus:text-indigo-700 focus:outline-none"
-                      onClick={() => handleComponentClick("labs")}
+                      onClick={() => handleComponentClick("Users")}
                     >
                       <div className="flex items-center">
                         <div className="w-6 h-6 md:w-8 md:h-8">
@@ -208,7 +247,7 @@ export default function Sidebar() {
                           </svg>
                         </div>
                         <span className="ml-2 xl:text-base md:text-2xl text-base">
-                          Labs Requests
+                          Users
                         </span>
                       </div>
                     </li>
@@ -233,13 +272,14 @@ export default function Sidebar() {
                           </svg>
                         </div>
                         <span className="ml-2 xl:text-base md:text-2xl text-base">
-                          Tests Requests
+                          PostsRequests
                         </span>
                       </div>
                     </li>
+
                     <li
                       className="pl-6 cursor-pointer text-white-600 text-md leading-3 tracking-normal mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none"
-                      onClick={() => handleComponentClick("approvedLabs")}
+                      onClick={() => handleComponentClick("Users")}
                     >
                       <div className="flex items-center">
                         <div className="w-6 h-6 md:w-8 md:h-8">
@@ -259,13 +299,13 @@ export default function Sidebar() {
                           </svg>
                         </div>
                         <span className="ml-2 xl:text-base md:text-2xl text-base">
-                          Approved Labs
+                          Users
                         </span>
                       </div>
                     </li>
                     <li
                       className="pl-6 cursor-pointer text-white-600 text-md leading-3 tracking-normal py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none"
-                      onClick={() => handleComponentClick("approvedTests")}
+                      onClick={() => handleComponentClick("AllComments")}
                     >
                       <div className="flex items-center">
                         <div className="w-6 h-6 md:w-8 md:h-8">
@@ -286,40 +326,13 @@ export default function Sidebar() {
                           </svg>
                         </div>
                         <span className="ml-2 xl:text-base md:text-2xl text-base">
-                          Approved Tests
+                          AllComments
                         </span>
                       </div>
                     </li>
                   </ul>
                 </div>
                 <div className="w-full">
-                  <div className="flex justify-center mb-4 w-full px-6">
-                    <div className="relative w-full">
-                      <div className="text-white-500 absolute ml-4 inset-0 m-auto w-4 h-4">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="icon icon-tabler icon-tabler-search"
-                          width={16}
-                          height={16}
-                          viewBox="0 0 24 24"
-                          strokeWidth={1}
-                          stroke="#A0AEC0"
-                          fill="none"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path stroke="none" d="M0 0h24v24H0z" />
-                          <circle cx={10} cy={10} r={7} />
-                          <line x1={21} y1={21} x2={15} y2={15} />
-                        </svg>
-                      </div>
-                      <input
-                        className="bg-gray-200 focus:outline-none rounded w-full text-md text-white-500  pl-10 py-2"
-                        type="text"
-                        placeholder="Search"
-                      />
-                    </div>
-                  </div>
                   <div className="border-t border-gray-300">
                     <div className="w-full flex items-center justify-between px-6 pt-1">
                       <div className="flex items-center">
@@ -386,33 +399,7 @@ export default function Sidebar() {
                 style={{ backgroundColor: "white", border: "1px solid black" }}
               >
                 {/* search bar */}
-                <div className="w-1/2 h-full hidden lg:flex items-center pl-6 pr-24">
-                  <div className="relative w-full">
-                    <div className="text-white-500 absolute ml-4 inset-0 m-auto w-4 h-4">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="icon icon-tabler icon-tabler-search"
-                        width={16}
-                        height={16}
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="currentColor"
-                        fill="none"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path stroke="none" d="M0 0h24v24H0z" />
-                        <circle cx={10} cy={10} r={7} />
-                        <line x1={21} y1={21} x2={15} y2={15} />
-                      </svg>
-                    </div>
-                    <input
-                      className="border border-gray-100 focus:outline-none focus:border-indigo-700 rounded w-full text-md text-white-500 bg-gray-100 pl-12 py-2"
-                      type="text"
-                      placeholder="Search"
-                    />
-                  </div>
-                </div>
+                <div className="w-1/2 h-full hidden lg:flex items-center pl-6 pr-24"></div>
                 <div className="w-1/2 hidden lg:flex">
                   <div className="w-full flex items-center pl-8 justify-end">
                     {/* notification */}
@@ -458,7 +445,7 @@ export default function Sidebar() {
                     </div>
                     {/* avatar + drop down */}
                     <div
-                      className="flex items-center relative cursor-pointer"
+                      className="flex items-end relative cursor-pointer"
                       onClick={() => setProfile(!profile)}
                     >
                       <div className="rounded-full">

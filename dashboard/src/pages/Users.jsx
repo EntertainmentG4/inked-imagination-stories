@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-function User ()
- {
+function User() {
   const [users, setUsers] = useState([]);
-  const { user_id } = useParams();
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/users") 
+      .get("http://localhost:5000/users")
       .then((response) => {
         setUsers(response.data);
       })
@@ -19,7 +16,6 @@ function User ()
       });
   }, []);
 
-  
   const handleDelete = (user_id) => {
     Swal.fire({
       title: "Confirmation",
@@ -29,11 +25,12 @@ function User ()
       confirmButtonText: "Delete",
       cancelButtonText: "Cancel",
       dangerMode: true,
-    }).then((result) => { if (result.isConfirmed) {
+    }).then((result) => {
+      if (result.isConfirmed) {
         axios
           .patch(`http://localhost:5000/users/${user_id}`, { deleted: true })
           .then((response) => {
-            setUsers(users.filter((user) => user.user_id !== user_id)); 
+            setUsers(users.filter((user) => user.user_id !== user_id));
           })
           .catch((error) => {
             console.log(error);
@@ -41,7 +38,6 @@ function User ()
       }
     });
   };
-
 
   return (
     <div className="container mx-auto py-10 md:w-4/5 w-11/12 px-1">
@@ -76,7 +72,7 @@ function User ()
                       <td className="text-sm whitespace-no-wrap text-center text-gray-800 dark:text-gray-100 tracking-normal leading-4">
                         <div className="flex items-center justify-center">
                           <img
-                            src={user.profile_pictuer}
+                            src={user.profile_picture}
                             alt="Profile"
                             className="w-8 h-8 rounded-full mr-3"
                           />
@@ -89,7 +85,7 @@ function User ()
                         <span>{user.email}</span>
                       </td>
                       <button
-                        className="bg-red-500 hover:bg-red-600 text-white h-8 w-24 rounded-md flex items-center justify-center"
+                        className="mt-8 bg-red-500 hover:bg-red-600 text-white h-8 w-24 rounded-md flex items-center justify-center"
                         onClick={() => handleDelete(user.user_id)}
                       >
                         <span className="text-xs">Delete</span>

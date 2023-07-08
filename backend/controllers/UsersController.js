@@ -58,7 +58,7 @@ const checkUser = async (req, res) => {
   const { email, password } = req.body;
   try {
     const query =
-      "SELECT * FROM public.users WHERE role = 'user'  ORDER BY user_id ASC";
+      "SELECT * FROM public.users WHERE role = 'user' AND deleted = false  ORDER BY user_id ASC";
     const results = await db.query(query);
 
     for (const user of results.rows) {

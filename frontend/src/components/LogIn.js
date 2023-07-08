@@ -1,35 +1,28 @@
-import {  useLayoutEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useLayoutEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
-import Swal from "sweetalert2";
-
-const testUser = {
-  email: "johndoeneog@neog.com",
-  password: "John@101",
-};
+import { useDispatch } from "react-redux";
+import { checkUsersAsync } from "../reducers/index";
 
 const LogIn = () => {
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const [loginState, setLoginState] = useState({
     email: "",
     password: "",
   });
-  
-  const navigate = useNavigate();
 
   useLayoutEffect(() => {
     document.title = "Login | The Book Shelf";
-    // getAuth() !== null ? navigate("/") : setUserState(authInitialState);
-  }, 
-  // [navigate, setUserState]
-  );
+  });
 
-  const submitHandlerFn = (e) => {
+  const submitHandlerFn = async (e) => {
     e.preventDefault();
 
     let error = {};
     const email_pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
     if (loginState.email === "") {
       error.email = "Email should not be empty.";
@@ -48,30 +41,15 @@ const LogIn = () => {
       error.password = "";
     }
 
-    // Check if email is not registered
-    if (loginState.email === "example@example.com") {
-      error.email = "Email is not registered";
-      Swal.fire({
-        icon: "error",
-        title: "Validation Error",
-        text: "Email is not registered",
-      }).then(() => {
-        // Redirect to sign-up page
-        navigate("/SignUp");
-      });
-    }
-
-    // Display SweetAlert for validation errors
-    if (error.email || error.password) {
-      const errorMessages = Object.values(error).filter((msg) => msg !== "");
-      Swal.fire({
-        icon: "error",
-        title: "Validation Error",
-        text: errorMessages.join("\n"),
-      });
-    } else {
-      // Proceed with login
-      // handleLoginFn(loginState);
+    try {
+      dispatch(
+        checkUsersAsync({
+          email: loginState.email,
+          password: loginState.password,
+        })
+      );
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -79,22 +57,17 @@ const LogIn = () => {
     setLoginState({ ...loginState, [e.target.name]: e.target.value });
   };
 
-  const testUserHandler = (e) => {
-    setLoginState(testUser);
-    // handleLoginFn(testUser);
-  };
-
   return (
     <>
       <section>
-        <div className="flex flex-col mt-5 items-center justify-center px-6 py-8 mx-auto mt-32 overflow-hidden md:mt-0 md:h-screen lg:py-0 text-left">
+        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto mt-32 overflow-hidden md:mt-0 md:h-screen lg:py-0 text-left">
           <div className="w-full bg-gray-800 border border-gray-700 rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <img
-    src="https://wallpapersworld.org/wp-content/uploads/2023/02/%D8%AE%D9%84%D9%81%D9%8A%D8%A7%D8%AA-%D8%A7%D9%86%D9%85%D9%8A-%D8%A8%D9%86%D8%A7%D8%AA-%D9%83%D9%8A%D9%88%D8%AA-2-768x480.jpg"
-    alt="header-books"
-    className="absolute inset-0 object-cover object-right w-full h-50 -z-10 md:object-center"
-  />
+              <img
+                src="https://wallpapersworld.org/wp-content/uploads/2023/02/%D8%AE%D9%84%D9%81%D9%8A%D8%A7%D8%AA-%D8%A7%D9%86%D9%85%D9%8A-%D8%A8%D9%86%D8%A7%D8%AA-%D9%83%D9%8A%D9%88%D8%AA-2-768x480.jpg"
+                alt="header-books"
+                className="absolute inset-0 object-cover object-right w-full h-50 -z-10 md:object-center"
+              />
 
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-100 md:text-2xl">
                 Sign in to your account
@@ -160,13 +133,6 @@ const LogIn = () => {
                   Sign in
                 </button>
 
-                <button
-                  onClick={testUserHandler}
-                  type="button"
-                  className="w-full px-5 py-2.5 text-xs lg:text-sm font-medium text-center text-gray-600 rounded-lg bg-cyan-50 focus:ring-4 focus:outline-none hover:text-gray-100 hover:bg-cyan-950 focus:ring-cyan-950"
-                >
-                  Test User
-                </button>
                 <p className="text-sm font-light text-gray-400">
                   Don't have an account yet?
                   <Link

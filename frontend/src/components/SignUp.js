@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
-// import { AuthContext } from "../../contexts/AuthProvider";
+import { Link } from "react-router-dom";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
-import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+import { addUser } from "../reducers/index";
+import { createUsersAsync } from "../reducers/index";
 
 const SignUp = () => {
+  const dispatch = useDispatch();
   const [signupState, setSignupState] = useState({
     firstName: "",
     lastName: "",
     email: "",
+    birthdate: "",
     password: "",
     confirmPassword: "",
   });
@@ -18,9 +21,6 @@ const SignUp = () => {
     confirmPassword: false,
   });
 
-  // const { handleSignUpFn } = useContext(AuthContext);
-  const navigate = useNavigate();
-
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
@@ -28,63 +28,56 @@ const SignUp = () => {
     document.title = "Sign Up | The Book Shelf";
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const { email, password, confirmPassword, firstName, lastName } =
-      signupState;
 
-    if (password !== confirmPassword) {
+    if (signupState.password !== signupState.confirmPassword) {
       toast.error("Password and Confirm password do not match");
       return;
     }
 
-    // Check if password meets the regex requirements
-    if (!passwordRegex.test(password)) {
+    if (!passwordRegex.test(signupState.password)) {
       toast.error(
         "Password should be 8 to 24 characters long and contain at least one lowercase letter, one uppercase letter, one number, and one special character (!@#$%)."
       );
       return;
     }
-
-    // Add your email registration check logic here
-    const isEmailRegistered = checkIfEmailRegistered(email);
-    if (isEmailRegistered) {
-      Swal.fire({
-        icon: "error",
-        title: "Email Already Registered",
-        text: "The email is already registered. Please proceed to login.",
-      }).then(() => {
-        navigate("/login");
-      });
-      return;
+    try {
+      dispatch(
+        addUser({
+          username: signupState.firstName + " " + signupState.lastName,
+          email: signupState.email,
+          password: signupState.password,
+        })
+      );
+      dispatch(
+        createUsersAsync({
+          username: signupState.firstName + " " + signupState.lastName,
+          email: signupState.email,
+          password: signupState.password,
+          dateofbirth: signupState.birthdate,
+        })
+      );
+    } catch (error) {
+      console.log(error);
     }
-
-    // handleSignUpFn({ email, password, firstName, lastName });
-
-    // // Redirect to home page after successful registration
-    // navigate("/");
-  };
-
-  const checkIfEmailRegistered = (email) => {
-    // Add your logic to check if the email is already registered
-    // Return true if email is registered, false otherwise
-    // You can use your API or database to perform this check
-    // For demonstration purposes, assume the email is not registered
-    return false;
   };
 
   const changeHandlerFn = (e) => {
     setSignupState({ ...signupState, [e.target.name]: e.target.value });
   };
+
+  console.log(signupState);
+
   return (
-    <div className="relative py-24 mt-16 overflow-hidden bg-gray-900 lg:mt-0 isolate sm:pt-32 sm:pb-16">
+    <div className="relative py-24 overflow-hidden bg-gray-900 lg:mt-0 isolate sm:pt-32 sm:pb-16">
       <img
         src="https://w0.peakpx.com/wallpaper/4/328/HD-wallpaper-beautiful-bookworm-short-hair-pretty-reading-girl-books-library-anime.jpg"
         alt="header-books"
         className="absolute inset-0 object-cover object-right w-full h-50 -z-10 md:object-center"
       />
 
-      <div className="flex flex-col items-center px-4 sm:px-6 lg:px-8 mx-auto sm:mt-32 md:mt-0 md:h-screen lg:py-0 text-left">
+      <div className="flex flex-col items-center my-12 px-4 sm:px-6 lg:px-8 mx-auto sm:mt-32 md:mt-0 md:h-screen lg:py-0 text-left">
         <div className="w-full max-w-md bg-gray-800 border border-gray-700 rounded-lg shadow md:mt-0 xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-100 md:text-2xl text-center mb-5">
@@ -162,72 +155,60 @@ const SignUp = () => {
                   required={true}
                 />
               </div>
-              <div>
+              <div className="relative">
                 <label
                   htmlFor="password"
                   className="block mb-2 text-sm font-medium text-gray-100"
                 >
                   Password
                 </label>
-                {showPassword.password ? (
+
+                {showPassword ? (
                   <EyeIcon
-                    onClick={() =>
-                      setShowPassword({ ...showPassword, password: false })
-                    }
+                    onClick={() => setShowPassword(false)}
                     className="absolute w-6 h-6 text-gray-500 cursor-pointer right-2 bottom-2"
                   />
                 ) : (
                   <EyeSlashIcon
-                    onClick={() =>
-                      setShowPassword({ ...showPassword, password: true })
-                    }
+                    onClick={() => setShowPassword(true)}
                     className="absolute w-6 h-6 text-gray-500 cursor-pointer right-2 bottom-2"
                   />
                 )}
                 <input
-                  type={showPassword.password ? "text" : "password"}
-                  onChange={changeHandlerFn}
-                  value={signupState.password}
+                  type={showPassword ? "text" : "password"}
                   name="password"
-                  minLength="6"
                   id="password"
+                  minLength="6"
+                  value={signupState.password}
+                  onChange={changeHandlerFn}
                   placeholder="••••••••"
-                  className="border sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-gray-100 focus:ring-cyan-800 focus:border-cyan-800"
+                  className="border sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-gray-100 focus:ring-cyan-800 focus:border-cyan-800"
                   required={true}
                 />
               </div>
-              <div>
+              <div className="relative">
                 <label
                   htmlFor="confirmPassword"
                   className="block mb-2 text-sm font-medium text-gray-100"
                 >
                   Confirm password
                 </label>
-                {showPassword.confirmPassword ? (
+
+                {showPassword ? (
                   <EyeIcon
-                    onClick={() =>
-                      setShowPassword({
-                        ...showPassword,
-                        confirmPassword: false,
-                      })
-                    }
+                    onClick={() => setShowPassword(false)}
                     className="absolute w-6 h-6 text-gray-500 cursor-pointer right-2 bottom-2"
                   />
                 ) : (
                   <EyeSlashIcon
-                    onClick={() =>
-                      setShowPassword({
-                        ...showPassword,
-                        confirmPassword: true,
-                      })
-                    }
+                    onClick={() => setShowPassword(true)}
                     className="absolute w-6 h-6 text-gray-500 cursor-pointer right-2 bottom-2"
                   />
                 )}
                 <input
                   onChange={changeHandlerFn}
                   value={signupState.confirmPassword}
-                  type={showPassword.confirmPassword ? "text" : "password"}
+                  type={showPassword ? "text" : "password"}
                   name="confirmPassword"
                   minLength="6"
                   id="confirmPassword"
@@ -236,7 +217,6 @@ const SignUp = () => {
                   required={true}
                 />
               </div>
-
               <button
                 type="submit"
                 className="w-full px-5 py-2.5 text-xs lg:text-sm font-medium text-center text-gray-100 rounded-lg bg-cyan-900 focus:ring-4 focus:outline-none hover:bg-cyan-950 focus:ring-cyan-950"

@@ -8,6 +8,7 @@ CREATE TABLE users (
   role VARCHAR(20) NOT NULL DEFAULT 'user',
   profile_picture VARCHAR(255),
   dateofbirth DATE,
+  deleted BOOLEAN DEFAULT false,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -15,6 +16,7 @@ CREATE TABLE contact (
   contact_id SERIAL PRIMARY KEY,
   user_id INTEGER,
   username VARCHAR(255) NOT NULL,
+  phone_number VARCHAR(255) NOT NULL,
   email VARCHAR(255),
   subject VARCHAR(255) NOT NULL,
   message TEXT NOT NULL,
@@ -37,10 +39,10 @@ CREATE TABLE posts (
   post_id SERIAL PRIMARY KEY,
   user_id INTEGER NOT NULL,
   title VARCHAR(255) NOT NULL,
-  image VARCHAR(255) NOT NULL,
   content TEXT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   post_status VARCHAR(20) NOT NULL DEFAULT 'pending',
+  rejection_reason TEXT,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
 );
