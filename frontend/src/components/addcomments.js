@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 import {
   Popover,
   PopoverHandler,
@@ -17,7 +18,7 @@ function AddComments({ post_id }) {
   const [updatedComment, setUpdatedComment] = useState("");
   const [selectedCommentId, setSelectedCommentId] = useState();
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-
+const navigate =useNavigate();
   //////////////////
   const [user_id, setUser_id] = useState();
 
@@ -52,11 +53,25 @@ function AddComments({ post_id }) {
 
   const postComment = async () => {
     try {
+      if (!user_id) {
+        Swal.fire({
+          title: "User Not Registered",
+          text: "Please register or log in to post a comment.",
+          icon: "warning",
+          confirmButtonText: "Log In",
+        }).then((result) => {
+          if (result.isConfirmed) {
+          navigate('/LogIn');
+          }
+        });
+        return;
+      }
+  
       const comment = {
         content: newComment,
         user_id: user_id,
       };
-
+  
       const response = await axios.post(
         `http://localhost:5000/postComments/${post_id}/comments`,
         comment
@@ -68,6 +83,7 @@ function AddComments({ post_id }) {
       console.error("Error posting comment:", error);
     }
   };
+  
 
   const handleAddComment = () => {
     if (newComment.trim() === "") {
@@ -182,15 +198,16 @@ function AddComments({ post_id }) {
                     </div>
                     <div className="flex flex-col items-start justify-between w-full space-y-2 sm:flex-row">
                       <p className="text-xs text-gray-500">
-                        {item.created_at}{" "}
+                        {item.created_at}
                       </p>
                     </div>
+                    <div className="col-span-2 text-left mt-5 mt-5">
+                      <p className="text-md text-left">{item.content}</p>
+                    </div>
                   </div>
-                  <div className="col-span-2">
-                    <p className="text-md">{item.content}</p>
-                  </div>
+
                   <div className="flex flex-col">
-                    {item.user_id === user_id && ( // Conditional rendering for edit and delete buttons
+                    {item.user_id === user_id && (
                       <>
                         <Button
                           className="text-red-500 text-xs hover:text-red-700 ml-2 mb-2 font-semibold bg-transparent"
@@ -211,7 +228,10 @@ function AddComments({ post_id }) {
                               className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
                               onSubmit={handleEditForm}
                             >
-                              <div className="mb-4 flex flex-col gap-6">
+                              <div className="mb-4 flex flex-col gap-I apologize for the incomplete response in the previous message. Here's the continuation of the corrected code:
+
+```jsx
+    6">
                                 <Input
                                   size="lg"
                                   className="border text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block bg-gray-700 border-gray-600 placeholder-gray-400 text-gray-100"

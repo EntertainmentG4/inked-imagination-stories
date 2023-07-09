@@ -16,6 +16,7 @@ import NavMenu from "./components/secondNav";
 import UserProfile from "./pages/UserProfile";
 import ProductOverview from "./components/productDetails";
 import CategoryDetails from "./components/CategoryDetails";
+import UserPosts from "./pages/userPosts";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="/UserProfile" element={<UserProfile />} />
           <Route path="/ProductOverview/:id" element={<ProductOverview />} />
           <Route path="/category/:categoryName" element={<CategoryDetails />} />
+          <Route path="/UserPosts/:user_id" element={<UserPosts />} />
         </Routes>
         <Footer />
       </BrowserRouter>

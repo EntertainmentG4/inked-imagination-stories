@@ -21,7 +21,7 @@ function Nav() {
 
   return (
     <header>
-      <div className="fixed top-0 left-0 right-0 z-30 py-2 bg-gray-900">
+      <div className="fixed top-0 left-0 right-0 z-50 py-2 bg-gray-900">
         <div
           aria-label="Top"
           className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8"

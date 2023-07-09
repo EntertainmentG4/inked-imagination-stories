@@ -11,6 +11,7 @@ import {
 } from "@material-tailwind/react";
 import jwtDecode from "jwt-decode";
 import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const Modal = ({ children }) => {
   const modalRoot = document.getElementById("modal-root");
@@ -103,7 +104,6 @@ const UserProfile = () => {
 
   const handleSelectedAvatar = (avatarUrl) => {
     setAvatarImg(avatarUrl);
-    // console.log(avatarUrl);
   };
 
   const [updatedInfo, setUpdatedInfo] = useState({
@@ -121,7 +121,6 @@ const UserProfile = () => {
     }));
   }, [userData, avatarImg]);
 
-  // console.log(updatedInfo);
 
   const changeHandlerInputFields = (event) => {
     setUpdatedInfo({ ...updatedInfo, [event.target.name]: event.target.value });
@@ -203,8 +202,8 @@ const UserProfile = () => {
                         alt="..."
                         src={
                           userData.profile_picture === "" ||
-                          userData.profile_picture === null ||
-                          userData.profile_picture === undefined
+                            userData.profile_picture === null ||
+                            userData.profile_picture === undefined
                             ? avatars[0].img
                             : userData.profile_picture
                         }
@@ -222,6 +221,15 @@ const UserProfile = () => {
                       >
                         Edit Profile
                       </button>
+                      <Link to={`/UserPosts/${user_id}`}>
+                        <button
+                          className="bg-gray-500 active:bg-pink-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
+                          type="button"
+                        >
+                          My Posts
+                        </button>
+                      </Link>
+
                     </div>
                   </div>
                   <div className="w-full lg:w-4/12 px-4 lg:order-1"></div>

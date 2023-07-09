@@ -1,5 +1,5 @@
 import { useLayoutEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { useDispatch } from "react-redux";
 import { checkUsersAsync } from "../reducers/index";
@@ -7,6 +7,7 @@ import { checkUsersAsync } from "../reducers/index";
 const LogIn = () => {
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
   const [loginState, setLoginState] = useState({
     email: "",
     password: "",
@@ -48,6 +49,7 @@ const LogIn = () => {
           password: loginState.password,
         })
       );
+      navigate("/");
     } catch (error) {
       console.log(error);
     }

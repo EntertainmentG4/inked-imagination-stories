@@ -53,7 +53,6 @@ function Testimonial() {
             color: '#fff',
             fontSize: '2rem',
             fontWeight: 'bold',
-            textShadow: '0 0 7px #fff, 0 0 3px #fff, 0 0 10px #fff, 0 0 40px #d4a37f, 0 0 50px #d4a37f, 0 0 60px #d4a37f, 0 0 70px #d4a37f',
           }}
           >Top Rated</h2>
           <Carousel

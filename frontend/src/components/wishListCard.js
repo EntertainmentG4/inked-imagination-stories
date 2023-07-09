@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -6,16 +7,18 @@ function BooksCard({ user_id }) {
   const [BooksData, setBooksData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchFavorites = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/favorites/${user_id}`);
-        setBooksIds(response.data);
-      } catch (error) {
-        console.error("Failed to fetch favorites:", error);
-      }
-    };
+  const fetchFavorites = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/favorites/${user_id}`
+      );
+      setBooksIds(response.data);
+    } catch (error) {
+      console.error("Failed to fetch favorites:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchFavorites();
   }, [user_id]);
 
@@ -34,6 +37,24 @@ function BooksCard({ user_id }) {
     fetchBooksData();
   }, []);
 
+  const removeFromFavorites = async (bookId) => {
+    try {
+      setBooksIds((prevIds) => prevIds.filter((id) => id !== bookId));
+
+      setBooksData((prevData) => prevData.filter((book) => book.id !== bookId));
+
+      console.log("Book removed from favorites!");
+
+      await axios.delete(
+        `http://localhost:5000/favorites/${user_id}/${bookId}`
+      );
+
+      await fetchFavorites();
+    } catch (error) {
+      console.error("Failed to remove book from favorites:", error);
+    }
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -43,17 +64,13 @@ function BooksCard({ user_id }) {
     console.log(`Book ID: ${book.id} - Is in Favorites? ${isBookInFavorites}`);
     return isBookInFavorites;
   });
-  
-
-  
-  console.log(BooksIds)
 
   return (
     <>
       {filteredBooks.map((book) => (
         <div
           key={book.id}
-          className="flex flex-col items-center self-start border border-gray-500 rounded-lg hover:bg-gray-800 hover:border hover:border-gray-700 "
+          className="flex flex-col items-center self-start border border-gray-500 rounded-lg hover:bg-gray-800 hover:border hover:border-gray-700"
         >
           <div className="relative">
             <img
@@ -61,6 +78,26 @@ function BooksCard({ user_id }) {
               src={book.imgUrl}
               alt={book.title}
             />
+            <button
+              type="button"
+              className="absolute top-2 right-2 rounded-full w-8 h-8 bg-gray-700 flex items-center justify-center"
+              onClick={() => removeFromFavorites(book.id)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                className="w-4 h-4 text-gray-100"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
           </div>
           <div className="flex flex-col flex-wrap content-between justify-center px-5 pb-5 align-middle">
             <h5

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { useDispatch } from "react-redux";
 import { addUser } from "../reducers/index";
@@ -8,6 +8,7 @@ import { createUsersAsync } from "../reducers/index";
 
 const SignUp = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [signupState, setSignupState] = useState({
     firstName: "",
     lastName: "",
@@ -58,6 +59,7 @@ const SignUp = () => {
           dateofbirth: signupState.birthdate,
         })
       );
+      navigate("/");
     } catch (error) {
       console.log(error);
     }

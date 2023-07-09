@@ -1,80 +1,73 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import AddComments from "./addcomments";
-import jwt_decode from 'jwt-decode';
-import Swal from 'sweetalert2';
-
+import jwt_decode from "jwt-decode";
+import Swal from "sweetalert2";
 
 function PostDetails() {
+  const navigate = useNavigate();
   const { post_id } = useParams();
   const [post, setPost] = useState();
   const [userPosted, setUserPosted] = useState(false);
 
   const fetchBlogPost = () => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     const decodedToken = token ? jwt_decode(token) : null;
     const user_id = decodedToken?.user_id;
-
 
     axios
       .get(`http://localhost:5000/getPostById/${post_id}`)
       .then((response) => {
         const result = response.data;
         setPost(result);
-        setUserPosted(result.user_id === user_id); 
-
+        setUserPosted(result.user_id === user_id);
       })
       .catch((error) => {
         console.error("Error fetching blog posts:", error);
       });
   };
 
-
   useEffect(() => {
     fetchBlogPost();
   }, []);
 
-
-
-
   const deletePost = () => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     const decodedToken = token ? jwt_decode(token) : null;
     const user_id = decodedToken?.user_id;
 
     Swal.fire({
-      title: 'Confirmation',
-      text: 'Are you sure you want to delete the post?',
-      icon: 'warning',
+      title: "Confirmation",
+      text: "Are you sure you want to delete the post?",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Delete',
-      cancelButtonText: 'Cancel'
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Delete",
+      cancelButtonText: "Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
-        
         axios
           .delete(`http://localhost:5000/deletePost/${post_id}/${user_id}`)
-          .then((response) => {
+          .then(() => {
             console.log("Post deleted successfully");
-            Swal.fire('Deleted!', 'The post has been deleted.', 'success');
-            fetchBlogPost();
+            Swal.fire("Deleted!", "The post has been deleted.", "success");
+            setPost(null); // Remove the post from the state
+            navigate("/blog");
           })
           .catch((error) => {
             console.error("Error deleting post:", error);
-            Swal.fire('Error', 'An error occurred while deleting the post.', 'error');
+            Swal.fire(
+              "Error",
+              "An error occurred while deleting the post.",
+              "error"
+            );
           });
       }
     });
-    
   };
-
-
-
-
 
   function convertDate(timestamp) {
     const date = new Date(timestamp);
@@ -112,10 +105,12 @@ function PostDetails() {
                     </h2>
                   </div>
                   <button
-                    className="text-gray-300 hover:text-white absolute me-3 top-2 right-2" 
+                    className="text-gray-300 hover:text-white absolute me-3 top-2 right-2"
                     onClick={deletePost}
-                    style={{ display: userPosted ? "block" : "none",color: "red" }}
-
+                    style={{
+                      display: userPosted ? "block" : "none",
+                      color: "red",
+                    }}
                   >
                     X
                   </button>
@@ -124,8 +119,6 @@ function PostDetails() {
                   {post.title}
                 </h1>
                 <p className="leading-relaxed">{post.content}</p>
-
-
               </div>
             </div>
             <div>

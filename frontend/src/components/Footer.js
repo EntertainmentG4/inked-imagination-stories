@@ -15,9 +15,11 @@ const Footer = () => {
           />
 
           <p className="leading-relaxed mt-2 text-[15px]">
-            Lorem Ipsum has been the industry's standard dummy text ever since
-            the 1500s, when an unknown printer took a galley of type and
-            scrambled it to make a type specimen book.
+            we believe that books are not just a source of knowledge
+            but also a gateway to limitless entertainment.Explore new worlds,
+            and embark on thrilling adventures with our vast collection
+            of books.Enchanting fantasies,
+            thought-provoking non-fiction, or heartwarming romance, we have something for every book lover.
           </p>
         </div>
 
@@ -41,7 +43,7 @@ const Footer = () => {
 
         <div className="mt-8 items-center justify-center sm:flex">
           <div className="mt-4 sm:mt-0">
-            &copy; 2022 Float UI All rights reserved.
+            &copy; 2023 THEBOOKSHELF All rights reserved.
           </div>
         </div>
       </footer>

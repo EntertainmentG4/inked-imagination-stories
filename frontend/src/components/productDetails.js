@@ -1,28 +1,16 @@
-import { useParams } from "react-router";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 
 const ProductOverview = () => {
   const { id } = useParams();
-  console.log(id);
-  const [bookData, setBookData] = useState([]);
+  const [bookData, setBookData] = useState({});
   const [wishlistStatus, setWishlistStatus] = useState(false);
-  const [user_id, setUser_id] = useState();
+  const [user_id, setUser_id] = useState(null);
   const [wishlist, setWishlist] = useState([]);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      try {
-        const decodedToken = jwtDecode(token);
-        const userId = decodedToken.user_id;
-        setUser_id(userId);
-      } catch (error) {
-        console.error("Error decoding token:", error);
-      }
-    }
-
     const fetchData = async () => {
       try {
         const response = await axios.get(`http://localhost:9000/books/${id}`);
@@ -35,7 +23,7 @@ const ProductOverview = () => {
     const fetchWishlistStatus = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/favorites/${user_id}`
+          `http://localhost:5000/wishlist/${user_id}`
         );
         if (response.status === 200) {
           setWishlist(response.data);
@@ -48,28 +36,33 @@ const ProductOverview = () => {
     const checkWishlistStatus = async () => {
       try {
         await fetchData();
-        await fetchWishlistStatus();
-        const isBookInWishlist = wishlist.some(
-          (item) => item.id === parseInt(id)
-        );
 
-        setWishlistStatus(isBookInWishlist);
+        const token = localStorage.getItem("token");
+        if (token) {
+          const decodedToken = jwtDecode(token);
+          const userId = decodedToken.user_id;
+          setUser_id(userId);
+          await fetchWishlistStatus();
+
+          const isBookInWishlist = wishlist.some(
+            (item) => item.id === parseInt(id)
+          );
+          setWishlistStatus(isBookInWishlist);
+        }
       } catch (error) {
         console.log(error);
       }
     };
 
     checkWishlistStatus();
-  }, [id, user_id]);
-
-  console.log(wishlist);
+  }, [id]);
 
   const addToWishlist = async () => {
     try {
       if (wishlistStatus) {
         // Remove from wishlist
         const response = await axios.delete(
-          `http://localhost:5000/favorites/${user_id}/${id}`
+          `http://localhost:5000/wishlist/${user_id}/${id}`
         );
         if (response.status === 200) {
           setWishlistStatus(false);

@@ -27,8 +27,7 @@ function Home() {
                 color: '#fff',
                 fontSize: '2rem',
                 fontWeight: 'bold',
-                textShadow: '0 0 7px #fff, 0 0 3px #fff, 0 0 10px #fff, 0 0 40px #d4a37f, 0 0 50px #d4a37f, 0 0 60px #d4a37f, 0 0 70px #d4a37f',
-              }}>Categorys</h2>
+              }}>Categories</h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 ml-12 mr-12">
               <CategoryCard />
