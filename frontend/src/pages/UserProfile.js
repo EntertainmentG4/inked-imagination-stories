@@ -1,11 +1,58 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
-import { Card, Typography } from "@material-tailwind/react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import ReactDOM from "react-dom";
+import {
+  Card,
+  Input,
+  Button,
+  Typography,
+  Avatar,
+} from "@material-tailwind/react";
 import jwtDecode from "jwt-decode";
+import { toast } from "react-hot-toast";
+
+const Modal = ({ children }) => {
+  const modalRoot = document.getElementById("modal-root");
+  const el = document.createElement("div");
+
+  React.useEffect(() => {
+    modalRoot.appendChild(el);
+    return () => {
+      modalRoot.removeChild(el);
+    };
+  }, [el, modalRoot]);
+
+  return ReactDOM.createPortal(children, el);
+};
+
+const avatars = [
+  {
+    id: 0,
+    img: "https://cdn.discordapp.com/attachments/1106603223458000987/1127311855585603584/3d-rendering-zoom-call-avatar.jpg",
+  },
+  {
+    id: 1,
+    img: "https://cdn.discordapp.com/attachments/1106603223458000987/1127306179723399308/3d-rendering-zoom-call-avatar_1.jpg",
+  },
+  {
+    id: 2,
+    img: "https://cdn.discordapp.com/attachments/1106603223458000987/1127306180126048256/3d-rendering-zoom-call-avatar.jpg",
+  },
+  {
+    id: 3,
+    img: "https://cdn.discordapp.com/attachments/1106603223458000987/1127306180620980224/3d-rendering-zoom-call-avatar_3.jpg",
+  },
+  {
+    id: 4,
+    img: "https://cdn.discordapp.com/attachments/1106603223458000987/1127306181141069914/3d-rendering-zoom-call-avatar_2.jpg",
+  },
+];
 
 const UserProfile = () => {
   const [user_id, setUser_id] = useState();
+  const [showForm, setShowForm] = useState(false);
+  const [avatarImg, setAvatarImg] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -20,7 +67,6 @@ const UserProfile = () => {
     }
   }, []);
 
-  console.log(user_id);
   const [userData, setUserData] = useState({
     username: "",
     email: "",
@@ -48,36 +94,64 @@ const UserProfile = () => {
     fetchUserData();
   }, [user_id]);
 
-  console.log(userData);
+  const handleCloseBtn = () => {
+    setShowForm(false);
+  };
+  const handleEditbtn = () => {
+    setShowForm(true);
+  };
 
-  // Retrive the
+  const handleSelectedAvatar = (avatarUrl) => {
+    setAvatarImg(avatarUrl);
+    // console.log(avatarUrl);
+  };
 
-  // Retrive all the posts
-  const [userPosts, setUserPosts] = useState([]);
+  const [updatedInfo, setUpdatedInfo] = useState({
+    username: "",
+    email: "",
+    profile_picture: "",
+  });
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`/api/users/${user_id}/posts`)
-  //     .then((response) => {
-  //       setUserPosts(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, [user_id]);
+  useEffect(() => {
+    setUpdatedInfo((prevData) => ({
+      ...prevData,
+      username: userData.username,
+      email: userData.email,
+      profile_picture: avatarImg,
+    }));
+  }, [userData, avatarImg]);
 
-  const TABLE_HEAD = ["Favorate Book", "Date"];
+  // console.log(updatedInfo);
 
-  const TABLE_ROWS = [
-    {
-      name: "",
-      date: "",
-    },
-    {
-      name: "",
-      date: "",
-    },
-  ];
+  const changeHandlerInputFields = (event) => {
+    setUpdatedInfo({ ...updatedInfo, [event.target.name]: event.target.value });
+  };
+
+  useEffect(() => {
+    setUpdatedInfo((prevData) => ({
+      ...prevData,
+      username: userData.username,
+      email: userData.email,
+      profile_picture: avatarImg === "" ? avatars[0].img : avatarImg,
+    }));
+  }, [userData, avatarImg]);
+
+  const HandleUpateUserInfo = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/UpdateUser/${user_id}`,
+        updatedInfo
+      );
+      setUserData(updatedInfo);
+      console.log("data Sent Successfully");
+      toast.success("Your info is Updated Successfully");
+      setShowForm(false);
+    } catch (error) {
+      toast.error("Error While Update your data");
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -127,25 +201,32 @@ const UserProfile = () => {
                     <div className="relative">
                       <img
                         alt="..."
-                        src={userData.profile_picture}
+                        src={
+                          userData.profile_picture === "" ||
+                          userData.profile_picture === null ||
+                          userData.profile_picture === undefined
+                            ? avatars[0].img
+                            : userData.profile_picture
+                        }
                         className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
                       />
                     </div>
                   </div>
                   <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
                     <div className="py-6 px-3 mt-32 sm:mt-0">
-                      <Link
+                      <button
                         to="/editForm"
                         className="bg-gray-500 active:bg-pink-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
                         type="button"
+                        onClick={handleEditbtn}
                       >
                         Edit Profile
-                      </Link>
+                      </button>
                     </div>
                   </div>
                   <div className="w-full lg:w-4/12 px-4 lg:order-1"></div>
                 </div>
-                <div className="text-center mt-12">
+                <div className="text-center mt-12 mb-20">
                   <h3 className="text-4xl font-semibold leading-normal text-blueGray-700 mb-2">
                     {userData.username}
                   </h3>
@@ -154,124 +235,101 @@ const UserProfile = () => {
                     {userData.email}
                   </div>
                 </div>
-
-                <div className=" py-10 border-t border-blueGray-200 text-center">
-                  <div className="flex flex-wrap justify-center">
-                    <div className="w-full lg:w-9/12 px-4">
-                      <div className="text-center">
-                        <div className="text-sm leading-normal mb-2 text-blueGray-400 font-bold uppercase">
-                          Your Wish List
-                        </div>
-                      </div>
-
-                      <Card className="overflow-scroll h-full w-full">
-                        <table className="w-full min-w-max table-auto text-center">
-                          <thead>
-                            <tr>
-                              {TABLE_HEAD.map((head) => (
-                                <th
-                                  key={head}
-                                  className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
-                                >
-                                  <Typography
-                                    variant="small"
-                                    color="blue-gray"
-                                    className="font-normal leading-none opacity-70"
-                                  >
-                                    {head}
-                                  </Typography>
-                                </th>
-                              ))}
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {/* ----------------------------------Retriving the wishlist------------------------------------- */}
-                            {TABLE_ROWS.map(({ name, date }, index) => {
-                              const isLast = index === TABLE_ROWS.length - 1;
-                              const classes = isLast
-                                ? "p-4"
-                                : "p-4 border-b border-blue-gray-50";
-
-                              return (
-                                <tr key={name}>
-                                  <td className={classes}>
-                                    <Typography
-                                      variant="small"
-                                      color="blue-gray"
-                                      className="font-normal"
-                                    >
-                                      {name}
-                                    </Typography>
-                                  </td>
-                                  <td className={classes}>
-                                    <Typography
-                                      variant="small"
-                                      color="blue-gray"
-                                      className="font-normal"
-                                    >
-                                      {date}
-                                    </Typography>
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                            {/* ------------------------------------------------------------------------------------ */}
-                          </tbody>
-                        </table>
-                      </Card>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* User Posts */}
-            <div className="w-full bg-gray-200 dark:bg-gray-900 py-10">
-              <div className="container mx-auto px-6 flex items-start justify-center">
-                {/* <div className="w-full">
-                  {userPosts.map((post) => (
-                    <div
-                      key={post.id}
-                      className="flex flex-col lg:flex-row mx-auto bg-white dark:bg-gray-800 shadow rounded"
-                    >
-                      <div className="w-full lg:w-1/3 px-12 flex flex-col items-center py-10">
-                        <div className="w-24 h-24 mb-3 p-2 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                          <img
-                            className="w-full h-full overflow-hidden object-cover rounded-full"
-                            src={post.avatar}
-                            alt="User Img"
-                          />
-                        </div>
-                        <h2 className="text-gray-800 dark:text-gray-100 text-xl tracking-normal font-medium mb-1">
-                          {post.username}
-                        </h2>
-                        <p className="flex text-gray-600 dark:text-gray-100 text-sm tracking-normal font-normal mb-3 text-center">
-                          Created at {post.createdAt}
-                        </p>
-                        <h6 className="text-gray-600 dark:text-gray-100 text-xl leading-6 mb-2 text-center">
-                          {post.title}
-                        </h6>
-                        <p className="text-gray-600 dark:text-gray-100 text-sm tracking-normal font-normal mb-8 text-center w-10/12">
-                          {post.content}
-                        </p>
-                        <div className="flex items-start">
-                          <div className>
-                            <h2 className="text-gray-600 dark:text-gray-100 text-2xl leading-6 mb-2 text-center">
-                              Status
-                            </h2>
-                            <p className="text-gray-800 dark:text-gray-100 text-sm leading-5">
-                              {post.status}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div> */}
               </div>
             </div>
           </div>
         </section>
+        {showForm === true && (
+          <>
+            <Modal>
+              <div className="fixed inset-0 flex items-center justify-center backdrop-blur-md bg-opacity-50">
+                <Card
+                  shadow={false}
+                  style={{ backgroundColor: "#111827e3", padding: "2rem" }}
+                >
+                  <div className="flex justify-between">
+                    <Typography variant="h4" color="white">
+                      Edit Your Profile
+                    </Typography>
+                    <button
+                      type="button"
+                      class=" rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500  focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                      onClick={handleCloseBtn}
+                    >
+                      <span class="sr-only">Close menu</span>
+                      <svg
+                        class="h-6 w-6"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <div className="flex justify-center my-6">
+                    <Typography className="text-gray-400">
+                      Choose your Avatar
+                    </Typography>
+                  </div>
+                  <div className="flex gap-5 justify-center">
+                    {avatars?.map((item) => (
+                      <button
+                        key={item.id}
+                        onClick={() => handleSelectedAvatar(item.img)}
+                      >
+                        <Avatar
+                          src={item.img}
+                          alt="avatar"
+                          className="rounded-full"
+                        />
+                      </button>
+                    ))}
+                  </div>
+                  <form
+                    onSubmit={HandleUpateUserInfo}
+                    className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
+                  >
+                    <div className="mb-4 flex flex-col gap-6">
+                      <Input
+                        size="lg"
+                        placeholder="Edit your name"
+                        color="white"
+                        name="username"
+                        id="username"
+                        defaultValue={updatedInfo.username}
+                        onBlur={changeHandlerInputFields}
+                      />
+                      <Input
+                        size="lg"
+                        placeholder="Edit your email"
+                        color="white"
+                        name="email"
+                        id="email"
+                        defaultValue={updatedInfo.email}
+                        onBlur={changeHandlerInputFields}
+                      />
+                    </div>
+                    <Button
+                      className="mt-6  text-gray-100 rounded-lg bg-cyan-900 focus:ring-4 focus:outline-none hover:bg-cyan-950 focus:ring-cyan-950"
+                      fullWidth
+                      type="submit"
+                    >
+                      Update
+                    </Button>
+                  </form>
+                </Card>
+              </div>
+            </Modal>
+          </>
+        )}
       </main>
     </>
   );

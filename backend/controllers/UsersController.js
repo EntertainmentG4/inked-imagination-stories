@@ -108,32 +108,29 @@ const deleteUser = (req, res) => {
   );
 };
 
-// const UpdateUser = async (req, res) => {
-//   const id = parseInt(req.params.id);
-//   try {
-//     const query = "SELECT * FROM public.users WHERE user_id = $1";
-//     const results = await db.query(query, [id]);
-//     const username = results.rows[0].username;
-//     const email = results.rows[0].email;
-//     const profile_picture = results.rows[0].profile_picture;
-
-//     const queryU =
-//       "UPDATE public.users SET username =$1, email = $2, profile_picture =$4 WHERE user_id = $5";
-//     const resultsU = await db.query(queryU, [
-//       username,
-//       email,
-//       profile_picture,
-//       id,
-//     ]);
-//     res
-//       .status(200)
-//       .send(
-//         `Product info with ID: ${id} has been updated with existing values`
-//       );
-//   } catch (error) {
-//     return res.status(400).json(error);
-//   }
-// };
+const UpdateUser = async (req, res) => {
+  const id = parseInt(req.params.id);
+  try {
+    const objectArray = Object.keys(req.body);
+    const valuesArray = Object.values(req.body);
+    const queryArray = objectArray
+      .map((ele, index) => `${ele} = $${index + 1}`)
+      .join(", ");
+    const values = [...valuesArray.map((ele) => ele), id];
+    console.log(values);
+    const queryU = `UPDATE public.users SET ${queryArray} WHERE user_id = $${
+      objectArray.length + 1
+    }`;
+    const resultsU = await db.query(queryU, values);
+    res
+      .status(200)
+      .send(
+        `Product info with ID: ${id} has been updated with existing values`
+      );
+  } catch (error) {
+    return res.status(400).json(error);
+  }
+};
 
 module.exports = {
   handleCreateNewUser,
@@ -141,4 +138,5 @@ module.exports = {
   checkUser,
   getUserById,
   deleteUser,
+  UpdateUser,
 };

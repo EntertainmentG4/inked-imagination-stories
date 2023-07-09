@@ -9,12 +9,11 @@ import LogIn from "./components/LogIn";
 import SignUp from "./components/SignUp";
 import Blog from "./pages/blog";
 import Books from "./pages/books";
-import Postdetails from "./components/postdetails";
+import Postdetails from "./components/postdetails"; 
 import Addcomments from "./components/addcomments";
 import Wishlist from "./pages/wishList";
 import NavMenu from "./components/secondNav";
 import UserProfile from "./pages/UserProfile";
-import EditForm from "./components/EditProfile";
 
 function App() {
   return (
@@ -35,7 +34,6 @@ function App() {
           <Route path="/Addcomments" element={<Addcomments />} />
           <Route path="/Wishlist" element={<Wishlist />} />
           <Route path="/UserProfile" element={<UserProfile />} />
-          <Route path="/editForm" element={<EditForm />} />
         </Routes>
         <Footer />
       </BrowserRouter>
