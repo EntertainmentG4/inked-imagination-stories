@@ -8,7 +8,7 @@ const CategoryCard = () => {
       imgUrl:
         "https://ik.imagekit.io/pb97gg2as/E-Commerce-Assets/Categories/Fantasy.webp?updatedAt=1685900046954",
       description:
-        "Fantasy books involves magic, creatures, quests, and battles between good and evil.",
+        "Fantasy datas involves magic, creatures, quests, and battles between good and evil.",
     },
     {
       _id: "135e068a-6ce6-4dff-9769-0f1f6e516ca7",
@@ -70,26 +70,31 @@ const CategoryCard = () => {
   return (
     <>
       {categories.map((data) => (
-        <NavLink
-          to={`/products/${data.categoryName}`}
-          id={data._id}
-          title={data.description}
-          className="pb-2 bg-gray-700 border w-72 h-60 shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px] border-gray-400 transition-all duration-200 rounded-lg cursor-pointer backdrop-filter backdrop-blur-md hover:bg-gray-600 hover:bg-opacity-60 bg-opacity-60"
-        >
-          <div className="relative">
-            <img
-              src={data.imgUrl}
-              className="w-72 h-40 max-w-xs p-2"
-              alt="img"
-            />
-            <div className="absolute px-4 ml-4 text-sm leading-7 text-gray-100 bg-gray-600 bottom-3 backdrop-blur-md backdrop-filter bg-clip-padding bg-opacity-20 lg:gap-x-10 md:flex rounded-xl">
-              <span className="cursor-pointer">{data.categoryName}</span>
+        <>
+          <NavLink to={`/category/${data.categoryName}`} id={data._id} title={data.description}>
+            <div>
+              <div className="flex flex-col items-center self-start border h-[27rem] border-gray-500 rounded-lg hover:bg-gray-800 hover:border hover:border-gray-700">
+                <div className="relative">
+                  <img
+                    className="w-40 h-56 p-4 rounded-t-lg sm:w-56 sm:h-80"
+                    src={data.imgUrl}
+                    alt={data.title}
+                  />
+                  <div className="absolute px-4 ml-4 text-sm leading-7 text-gray-100 bg-gray-600 bottom-6 backdrop-blur-md backdrop-filter bg-clip-padding bg-opacity-20 sm:gap-x-10 md:flex rounded-xl">
+                    <span className="cursor-pointer">{data.categoryName}</span>
+                  </div>
+                </div>
+                <div className="flex flex-col flex-wrap content-between justify-center px-5 pb-5 align-middle">
+                  <div className="flex flex-col space-y-2">
+                    <p className="mx-4 text-sm text-gray-100 sm:block">
+                      {data.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-          <p className="mx-4 text-sm text-gray-100 sm:block">
-            {data.description}
-          </p>
-        </NavLink>
+          </NavLink>
+        </>
       ))}
     </>
   );

@@ -1,12 +1,28 @@
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import jwtDecode from "jwt-decode";
 
 const ProductOverview = () => {
   const { id } = useParams();
+  console.log(id);
   const [bookData, setBookData] = useState([]);
+  const [wishlistStatus, setWishlistStatus] = useState(false);
+  const [user_id, setUser_id] = useState();
+  const [wishlist, setWishlist] = useState([]);
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        const userId = decodedToken.user_id;
+        setUser_id(userId);
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
+    }
+
     const fetchData = async () => {
       try {
         const response = await axios.get(`http://localhost:9000/books/${id}`);
@@ -15,9 +31,65 @@ const ProductOverview = () => {
         console.log(error);
       }
     };
-    fetchData();
-  }, [id]);
-  console.log(bookData);
+
+    const fetchWishlistStatus = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/favorites/${user_id}`
+        );
+        if (response.status === 200) {
+          setWishlist(response.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const checkWishlistStatus = async () => {
+      try {
+        await fetchData();
+        await fetchWishlistStatus();
+        const isBookInWishlist = wishlist.some(
+          (item) => item.id === parseInt(id)
+        );
+
+        setWishlistStatus(isBookInWishlist);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    checkWishlistStatus();
+  }, [id, user_id]);
+
+  console.log(wishlist);
+
+  const addToWishlist = async () => {
+    try {
+      if (wishlistStatus) {
+        // Remove from wishlist
+        const response = await axios.delete(
+          `http://localhost:5000/favorites/${user_id}/${id}`
+        );
+        if (response.status === 200) {
+          setWishlistStatus(false);
+          console.log("Book removed from wishlist!");
+        }
+      } else {
+        // Add to wishlist
+        const response = await axios.post(
+          `http://localhost:5000/wishlist/${user_id}`,
+          { id }
+        );
+        if (response.status === 200) {
+          setWishlistStatus(true);
+          console.log("Book added to wishlist!");
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <section className="overflow-hidden text-gray-100">
@@ -33,7 +105,31 @@ const ProductOverview = () => {
             <h2 className="relative text-sm tracking-widest text-gray-500 title-font">
               {bookData.author}
               <div className="absolute right-0 sm:bottom-4 sm:relative bottom-24">
-                {/* <WishlistButton product={product} /> */}
+                <button
+                  type="button"
+                  onClick={addToWishlist}
+                  className={`absolute right-0 w-12 h-12 rounded-full top-1 ${
+                    wishlistStatus ||
+                    wishlist.some((item) => item.id === parseInt(id))
+                      ? "hidden"
+                      : "text-gray-400"
+                  }`}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2}
+                    stroke="currentColor"
+                    className="w-3/4 p-2 hover:fill-current bg-pink-200 rounded-full bg-opacity-60 h-3/4"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                    />
+                  </svg>
+                </button>
               </div>
             </h2>
             <h1 className="mb-1 text-3xl font-medium text-gray-100 title-font">

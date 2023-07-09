@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { HeartIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { MdOutlineExplore } from "react-icons/md";
-import { FiLogIn } from "react-icons/fi";
+import { FiLogIn, FiLogOut } from "react-icons/fi";
+import { set } from "date-fns";
 
 function Nav() {
+  const [auth, setAuth] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setAuth(true);
+    }
+  }, []);
+  const handlelogOutBtn = () => {
+    localStorage.removeItem("token");
+    setAuth(false);
+  };
+
   return (
     <header>
       <div className="fixed top-0 left-0 right-0 z-30 py-2 bg-gray-900">
@@ -79,18 +93,34 @@ function Nav() {
                     aria-hidden="true"
                   />
 
-                  <div className="ml-4 md:flow-root lg:ml-6">
-                    <NavLink
-                      to="login"
-                      className="flex items-center p-2 -m-2 group"
-                    >
-                      <FiLogIn
-                        className="flex-shrink-0 w-6 h-6 text-gray-100 group-hover:text-white"
-                        aria-hidden="true"
-                      />
-                      <span className="sr-only">user profile view</span>
-                    </NavLink>
-                  </div>
+                  {auth === false ? (
+                    <>
+                      <div className="ml-4 md:flow-root lg:ml-6">
+                        <NavLink
+                          to="login"
+                          className="flex items-center p-2 -m-2 group"
+                        >
+                          <FiLogIn
+                            className="flex-shrink-0 w-6 h-6 text-gray-100 group-hover:text-white"
+                            aria-hidden="true"
+                          />
+                          <span className="sr-only">user profile view</span>
+                        </NavLink>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      {" "}
+                      <div className="ml-4 md:flow-root lg:ml-6">
+                        <button onClick={handlelogOutBtn}>
+                          <FiLogOut
+                            className="flex-shrink-0 w-6 h-6 text-gray-100 group-hover:text-white"
+                            aria-hidden="true"
+                          />
+                        </button>
+                      </div>
+                    </>
+                  )}
                   <span
                     className="w-px h-6 ml-4 bg-gray-700 lg:ml-6"
                     aria-hidden="true"

@@ -87,3 +87,20 @@
   width: 95%;
   height: 100%;
 }
+
+/* style hero section */
+@keyframes star-fall {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+.animate-star {
+  animation: star-fall 6s linear infinite;
+  left: calc(50% - 1px);
+  opacity: 0.8;
+  transform: translateY(-100%);
+}

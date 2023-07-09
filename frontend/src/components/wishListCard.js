@@ -1,27 +1,58 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-function BooksCard() {
-  const [data, setData] = useState([]);
+function BooksCard({ user_id }) {
+  const [BooksIds, setBooksIds] = useState([]);
+  const [BooksData, setBooksData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:9000/books")
-      .then((response) => {
-        setData(response.data.slice(0,10));
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    const fetchFavorites = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/favorites/${user_id}`);
+        setBooksIds(response.data);
+      } catch (error) {
+        console.error("Failed to fetch favorites:", error);
+      }
+    };
+
+    fetchFavorites();
+  }, [user_id]);
+
+  useEffect(() => {
+    const fetchBooksData = async () => {
+      try {
+        const response = await axios.get("http://localhost:9000/books");
+        setBooksData(response.data);
+      } catch (error) {
+        console.error("Failed to fetch books data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchBooksData();
   }, []);
 
-  console.log(data);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  const filteredBooks = BooksData.filter((book) => {
+    const isBookInFavorites = BooksIds.includes(parseInt(book.id));
+    console.log(`Book ID: ${book.id} - Is in Favorites? ${isBookInFavorites}`);
+    return isBookInFavorites;
+  });
+  
+
+  
+  console.log(BooksIds)
 
   return (
     <>
-      {data.map((book) => (
+      {filteredBooks.map((book) => (
         <div
-          // onClick={(e) => productOverview(_id)}
+          key={book.id}
           className="flex flex-col items-center self-start border border-gray-500 rounded-lg hover:bg-gray-800 hover:border hover:border-gray-700 "
         >
           <div className="relative">
@@ -40,7 +71,7 @@ function BooksCard() {
             </h5>
             <div className="flex flex-col space-y-2">
               <div className="text-lg lg:text-2xl relative before:mr-1 before:content-[''] font-bold text-gray-100">
-                <span className=" absolute text-xs right-0 bottom-1.5 font-semibold px-2.5 py-0.5 rounded bg-cyan-900 bg-opacity-80 text-gray-100">
+                <span className="absolute text-xs right-0 bottom-1.5 font-semibold px-2.5 py-0.5 rounded bg-cyan-900 bg-opacity-80 text-gray-100">
                   {book.rating}
                 </span>
               </div>

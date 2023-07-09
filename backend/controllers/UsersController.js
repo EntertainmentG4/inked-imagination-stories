@@ -132,6 +132,44 @@ const UpdateUser = async (req, res) => {
   }
 };
 
+const deleteThePostByUser = (req, res) => {
+  const { post_id, user_id } = req.params;
+
+  db.query(
+    'DELETE FROM posts WHERE post_id = $1 AND user_id = $2',
+    [post_id, user_id],
+    (error) => {
+      if (error) {
+        console.error('Error deleting post:', error);
+        return res.status(500).json({ error: 'Internal server error' });
+      }
+
+      return res.status(200).json({ message: 'Post deleted successfully' });
+    }
+  );
+};
+
+const getPostsUserProfile = async (req, res) => {
+  try {
+    const { user_id } = req.params;
+
+    const query = `
+      SELECT p.post_id, p.title, p.content, p.post_status, p.rejection_reason, 
+             p.created_at, u.username, u.profile_picture
+      FROM posts p
+      INNER JOIN users u ON p.user_id = u.user_id
+      WHERE u.user_id = $1;
+    `;
+
+    const { rows } = await db.query(query, [user_id]);
+
+    res.json(rows);
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
 module.exports = {
   handleCreateNewUser,
   handleGetAllUsers,
@@ -139,4 +177,6 @@ module.exports = {
   getUserById,
   deleteUser,
   UpdateUser,
+  deleteThePostByUser,
+  getPostsUserProfile
 };

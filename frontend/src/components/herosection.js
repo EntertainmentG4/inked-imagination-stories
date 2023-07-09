@@ -2,6 +2,7 @@ import React from "react";
 import { BsArrowRight } from "react-icons/bs";
 import video from "../images/vedio.mp4";
 import { Link } from "react-router-dom";
+import "../App.css"
 
 function Hero() {
   return (
@@ -23,18 +24,31 @@ function Hero() {
               the book shelf
             </h1>
             <p className="mt-3 text-gray-100 font-firacode">
-              Step into a world of captivating books and let your imagination
-              soar
+              Step into a world of captivating books and let your imagination soar
             </p>
           </div>
 
           {/* ::Hero button */}
           <Link to="/books">
-            <button className="relative mt-5 mx-auto w-48 sm:w-56 md:w-64 border justify-center border-white rounded-lg px-4 py-2 inline-flex items-center text-lg font-firacode text-white overflow-hidden transition-all duration-300 transform hover:translate-x-4">
+            <button className="relative mt-5 mx-auto w-48 sm:w-56 md:w-64 border justify-center border-white rounded-lg px-4 py-2 inline-flex items-center text-lg font-firacode text-white overflow-hidden transition-all duration-300 transform hover:translate-x-4 z-50">
               <span className="relative -top-0.5 mr-2">Books</span>
               <BsArrowRight />
             </button>
           </Link>
+
+          <div className="absolute top-0 left-0 w-full h-full">
+            {Array.from({ length: 50 }).map((_, index) => (
+              <div
+                key={index}
+                className="absolute animate-star w-2 h-2 bg-white rounded-full"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  animationDelay: `${Math.random() * 6}s`,
+                }}
+              />
+            ))}
+          </div>
+
         </div>
       </div>
     </>

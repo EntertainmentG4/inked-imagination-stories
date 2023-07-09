@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
 
-function AllComments() {
+function AllComments() 
+{
+
   const [commentList, setCommentList] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/getAllcomments")
+    axios.get("http://localhost:5000/getAllcomments")
       .then((response) => {
         setCommentList(response.data);
       })
@@ -45,6 +46,8 @@ function AllComments() {
     });
   };
 
+
+
   return (
     <>
       <div className="flex flex-wrap justify-center">
@@ -60,7 +63,7 @@ function AllComments() {
             />
             <div>
               <h4 className="font-bold">{comment.username}</h4>
-              <p>{comment.content}</p>
+              <p className="text-left">{comment.content}</p>
               <button
                 className="mt-5 bg-red-500 hover:bg-red-600 text-white px-2 py-1 mt-2 rounded"
                 onClick={() => handleDeleteComment(comment.comment_id)}

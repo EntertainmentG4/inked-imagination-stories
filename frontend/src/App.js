@@ -15,6 +15,7 @@ import Wishlist from "./pages/wishList";
 import NavMenu from "./components/secondNav";
 import UserProfile from "./pages/UserProfile";
 import ProductOverview from "./components/productDetails";
+import CategoryDetails from "./components/CategoryDetails";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/Wishlist" element={<Wishlist />} />
           <Route path="/UserProfile" element={<UserProfile />} />
           <Route path="/ProductOverview/:id" element={<ProductOverview />} />
+          <Route path="/category/:categoryName" element={<CategoryDetails />} />
         </Routes>
         <Footer />
       </BrowserRouter>

@@ -8,8 +8,13 @@ function Featuers() {
     <>
       <section className="-mt-20 px-4">
         <div className="text-center">
-          <h1 className="text-3xl text-white font-semibold">Features</h1>
-        </div>
+          <h2 className="text-2xl font-bold mb-20 mt-10 text-white"
+            style={{
+              color: '#fff',
+              fontSize: '2rem',
+              fontWeight: 'bold',
+              textShadow: '0 0 7px #fff, 0 0 3px #fff, 0 0 10px #fff, 0 0 40px #d4a37f, 0 0 50px #d4a37f, 0 0 60px #d4a37f, 0 0 70px #d4a37f',
+            }}>Features</h2>        </div>
 
         <div className="flex-wrap items-center justify-center gap-8 text-center sm:flex">
           <div className="w-full px-4 py-4 mt-6 bg-white rounded-lg shadow-lg sm:w-1/2 md:w-1/2 lg:w-1/4 dark:bg-gray-800">

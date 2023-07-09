@@ -13,7 +13,7 @@ const NavMenu = () => {
 
   return (
     <nav
-      className={`bg-gray-900 mt-36 sm:mt-20 md:text-sm ${
+      className={`shadow bg-gray-900 mt-36 sm:mt-20 md:text-sm ${
         state ? "mt-24 md:mt-0" : ""
       }`}
     >
