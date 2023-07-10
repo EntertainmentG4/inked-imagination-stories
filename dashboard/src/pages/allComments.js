@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
 
-function AllComments() 
-{
-
+function AllComments() {
   const [commentList, setCommentList] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/getAllcomments")
+    axios
+      .get("http://localhost:5000/getAllcomments")
       .then((response) => {
         setCommentList(response.data);
       })
@@ -37,7 +36,11 @@ function AllComments()
             );
             setCommentList(updatedCommentList);
 
-            Swal.fire("Deleted!", "Your comment has been deleted.", "success");
+            Swal.fire(
+              "Deleted!",
+              "The comment has been deleted.",
+              "success"
+            );
           })
           .catch((error) => {
             console.error("Error deleting comment:", error);
@@ -46,33 +49,35 @@ function AllComments()
     });
   };
 
-
-
   return (
     <>
       <div className="flex flex-wrap justify-center">
-        {commentList.map((comment) => (
-          <div
-            key={comment.comment_id}
-            className="m-5 p-7 flex items-center border p-4 shadow-md transition duration-300 ease-in-out w-96 hover:shadow-lg"
-          >
-            <img
-              src={comment.profile_picture}
-              alt={comment.username}
-              className="w-10 h-10 rounded-full mr-4"
-            />
-            <div>
-              <h4 className="font-bold">{comment.username}</h4>
-              <p className="text-left">{comment.content}</p>
-              <button
-                className="mt-5 bg-red-500 hover:bg-red-600 text-white px-2 py-1 mt-2 rounded"
-                onClick={() => handleDeleteComment(comment.comment_id)}
-              >
-                Delete
-              </button>
+        {commentList.length === 0 ? (
+          <p className="mt-10">No comments yet.</p>
+        ) : (
+          commentList.map((comment) => (
+            <div
+              key={comment.comment_id}
+              className="m-5 p-7 flex items-center border p-4 shadow-md transition duration-300 ease-in-out w-96 hover:shadow-lg"
+            >
+              <img
+                src={comment.profile_picture}
+                alt={comment.username}
+                className="w-10 h-10 rounded-full mr-4"
+              />
+              <div>
+                <h4 className="font-bold">{comment.username}</h4>
+                <p className="text-left">{comment.content}</p>
+                <button
+                  className="mt-5 bg-red-500 hover:bg-red-600 text-white px-2 py-1 mt-2 rounded"
+                  onClick={() => handleDeleteComment(comment.comment_id)}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </>
   );

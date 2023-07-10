@@ -38,7 +38,7 @@ const PostCard = () => {
           );
           const updatedPosts = posts.filter((post) => post.post_id !== postId);
           setPosts(updatedPosts);
-          Swal.fire("Deleted!", "Your post has been deleted.", "success");
+          Swal.fire("Deleted!", "The post has been deleted.", "success");
         } catch (error) {
           console.error("Error deleting post:", error);
           Swal.fire(
@@ -58,32 +58,36 @@ const PostCard = () => {
 
   return (
     <div className="m-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {posts.map((post) => (
-        <div
-          key={post.post_id}
-          className="p-4 bg-white rounded-md shadow-md hover:shadow-lg transition duration-300"
-        >
-          <div className="flex items-center mb-2">
-            <img
-              src={post.profile_picture}
-              alt="Profile"
-              className="w-8 h-8 rounded-full mr-2"
-            />
-            <span className="font-bold text-gray-700">{post.username}</span>
-          </div>
-          <div className="text-gray-500 text-sm mb-2">
-            {convertDate(post.created_at)}
-          </div>
-          <h2 className="text-xl font-semibold mb-4">{post.title}</h2>
-          <p className="text-gray-800">{post.content}</p>
-          <button
-            className="mt-4 py-2 px-4 bg-red-500 hover:bg-red-600 text-white rounded-md focus:outline-none"
-            onClick={() => handleDelete(post.post_id)}
+      {posts.length === 0 ? (
+        <p className="m-10 text-center">No posts yet.</p>
+      ) : (
+        posts.map((post) => (
+          <div
+            key={post.post_id}
+            className="p-4 bg-white rounded-md shadow-md hover:shadow-lg transition duration-300"
           >
-            Delete
-          </button>
-        </div>
-      ))}
+            <div className="flex items-center mb-2">
+              <img
+                src={post.profile_picture}
+                alt="Profile"
+                className="w-8 h-8 rounded-full mr-2"
+              />
+              <span className="font-bold text-gray-700">{post.username}</span>
+            </div>
+            <div className="text-gray-500 text-sm mb-2">
+              {convertDate(post.created_at)}
+            </div>
+            <h2 className="text-xl font-semibold mb-4">{post.title}</h2>
+            <p className="text-gray-800">{post.content}</p>
+            <button
+              className="mt-4 py-2 px-4 bg-red-500 hover:bg-red-600 text-white rounded-md focus:outline-none"
+              onClick={() => handleDelete(post.post_id)}
+            >
+              Delete
+            </button>
+          </div>
+        ))
+      )}
     </div>
   );
 };

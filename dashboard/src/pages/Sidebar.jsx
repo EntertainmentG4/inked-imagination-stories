@@ -127,7 +127,9 @@ export default function Sidebar() {
                 </div>
               </li>
               <li
-                className="pl-6 mt-3 cursor-pointer text-white-600 text-md leading-3 tracking-normal py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none"
+                className={`pl-6 cursor-pointer text-white-600 text-md leading-3 tracking-normal pb-4 pt-5 text-indigo-700 focus:text-indigo-700 focus:outline-none ${
+                  activeMenuItem === "AllComments" ? "active" : ""
+                }`}
                 onClick={() => handleComponentClick("AllComments")}
               >
                 <div className="flex items-center">
@@ -151,10 +153,14 @@ export default function Sidebar() {
                   <span className="ml-2">All Comments</span>
                 </div>
               </li>
-              <li
-                className="pl-6 mt-3 cursor-pointer text-white-600 text-md leading-3 tracking-normal py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none"
+            
+                <li
+                className={`pl-6 cursor-pointer text-white-600 text-md leading-3 tracking-normal pb-4 pt-5 text-indigo-700 focus:text-indigo-700 focus:outline-none ${
+                  activeMenuItem === "PostCard" ? "active" : ""
+                }`}
                 onClick={() => handleComponentClick("PostCard")}
               >
+                
                 <div className="flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
